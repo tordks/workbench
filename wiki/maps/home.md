@@ -20,6 +20,7 @@ The front door to the vault. Open this first.
 ## Practices
 - [[python-project|Python project setup]]
 - [[react-vite-project|React + Vite project setup]]
+- [[obsidian-cli-on-wsl|Running the Obsidian CLI on WSL]]
 
 ## Concepts
 - [[blast-radius|Blast radius]]
