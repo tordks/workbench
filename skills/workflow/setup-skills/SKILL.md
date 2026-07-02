@@ -21,18 +21,18 @@ convention** — issue dependencies — which records *where* a fact lives rathe
 as an explainer. Adding a convention later is dropping a new file in `conventions/`; the process below
 picks it up unchanged.
 
-The wiring — each convention's target doc and the skills that read it — lives **here**, never in the
-convention files (that keeps them portable, pure rule-text). A content convention converges a new
+The wiring — each convention's target doc, the situation that calls for it, and the skills that read it —
+lives **here**, never in the convention files (that keeps them portable, pure rule-text). A content convention converges a new
 vendored `docs/agents/*.md` that `setup-matt-pocock-skills` doesn't scaffold; the routing convention
 edits a doc it does scaffold, in place.
 
-| Convention file | Vendored target | Read by |
-|---|---|---|
-| `coding-standards.md` | `docs/agents/coding-standards.md` | code-review, implement, tdd |
-| `doc-conventions.md` | `docs/agents/doc-conventions.md` | review-docs, code-review |
-| `testing-conventions.md` | `docs/agents/testing-conventions.md` | tdd, implement |
-| `commit-conventions.md` | `docs/agents/commit-conventions.md` | orchestrate |
-| `issue-dependencies.md` | `docs/agents/issue-tracker.md` (in place) | backlog |
+| Convention file | Vendored target | Read when | Read by |
+|---|---|---|---|
+| `coding-standards.md` | `docs/agents/coding-standards.md` | writing or changing code | code-review, implement, tdd |
+| `doc-conventions.md` | `docs/agents/doc-conventions.md` | writing or reviewing docs or comments | review-docs, code-review |
+| `testing-conventions.md` | `docs/agents/testing-conventions.md` | writing or changing tests | tdd, implement |
+| `commit-conventions.md` | `docs/agents/commit-conventions.md` | writing a commit or PR message | orchestrate |
+| `issue-dependencies.md` | `docs/agents/issue-tracker.md` (in place) | ordering or picking up issues | backlog |
 
 ## Edit the vendored docs in place
 
@@ -64,21 +64,22 @@ that config rather than restating it.
 
 Progressive disclosure: the vendored docs are the detail layer, read on demand; a compact
 `## Conventions` table in `CLAUDE.md` is the always-present index that routes to them. Fill one row
-per *configured* convention, taking its `Doc` and `Read by` from the wiring table above; a skipped
+per *configured* convention, taking its `Doc` and `Read when` from the wiring table above; a skipped
 convention has no row, so the table doubles as the "what's in force" manifest. Own **only** the four
 new conventions here; leave the `## Agent skills` block that `setup-matt-pocock-skills` wrote
 (issue-tracker / triage-labels / domain) as its own index so there aren't two competing maps.
 
-The orchestrator reads this table and injects the in-force docs into each subagent; a skill used
-directly finds them through the same table. The shape:
+An agent reads a convention's doc when its **Read when** applies — pulling in only what the task needs
+rather than loading all of them up front; the orchestrator routes the in-force docs to each subagent the
+same way. The shape:
 
 ```markdown
 ## Conventions
 
-Where this repo's conventions live. Skills read the relevant doc on demand; the orchestrator injects
-them into each subagent. No row = not configured (skills use built-ins + config).
+Where this repo's conventions live. Read a doc when its **Read when** applies — pull in only what the
+task needs, not all of them up front. No row = not configured (skills use built-ins + config).
 
-| Convention | Doc | Read by |
+| Convention | Doc | Read when |
 |---|---|---|
 | … one row per configured content convention, from the wiring table above … |
 ```
