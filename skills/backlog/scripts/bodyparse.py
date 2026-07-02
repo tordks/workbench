@@ -3,7 +3,7 @@
 
 The `## Blocked by` body section — a heading followed by `#NN` references — is a convention this
 workflow establishes per-repo (recorded in the repo's issue-creation convention by `setup-skills`),
-not an upstream default. Two consumers read the grammar: `promote-body-to-native.py` (bridges it
+not a mattpocock-skill default. Two consumers read the grammar: `promote-body-to-native.py` (bridges it
 into GitHub's native graph) and `order-from-body.py` (the backstop reader for trackers with no
 native graph). Defining the grammar here keeps those two in lockstep.
 """

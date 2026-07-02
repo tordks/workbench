@@ -13,18 +13,24 @@ related: ["[[python-project]]", "[[react-vite-project]]"]
 
 > **status: draft** — this is a first pass to correct, not gospel. Edit it until it matches reality.
 
-The path most work travels, from idea to shipped code. The named steps are skills. Local ones live
-in this vault; upstream ones install via `npx skills@latest add mattpocock/skills` (use `ask-matt`
-if you're unsure which fits).
+The path most work travels, from idea to shipped code. The named steps are skills. Some are local to
+this vault; the rest are mattpocock skills, installed via `npx skills@latest add mattpocock/skills`.
+The mattpocock skills span categories — most steps are `engineering/`, but `grill-me` and `handoff`
+are `productivity/`.
+
+## Setup (once per repo)
+`setup-matt-pocock-skills` scaffolds the generic per-repo config; `setup-skills` then converges the
+convention docs to this workflow's. Run both once after the skills are installed, before the flow
+below.
 
 ## Idea → ship
 
-1. **Sharpen the idea** — `grill-with-docs` (with a codebase) or `grill-me` (without). Interview
-   until the plan holds together; settle every question you can in conversation. `domain-modeling`
-   fires within, pinning down terms and ADRs as they surface.
+1. **Sharpen the idea** — `grill-with-docs` (also writes ADRs + glossary via `domain-modeling`) or
+   `grill-me` (the plain interview, no docs). Both run a relentless `grilling` session: interview
+   until the plan holds together, settling every question you can in conversation. When the reading
+   legwork is heavy, `research` runs it in a background agent while you keep going.
 2. **Detour to prototype** — `prototype` when a question needs a runnable answer (state, business
    logic, a UI you have to see): a throwaway build that settles the question, then is discarded.
-   `handoff` bridges context out to the prototype and the finding back.
 3. **Split the work:**
    - Multi-session build → `to-prd` (synthesize the conversation into a PRD) → `to-issues`
      (slice the PRD into independently grabbable issues).
@@ -37,10 +43,19 @@ if you're unsure which fits).
    clean seams.
 6. **Review** — `code-review` (standards + spec) + `review-docs` (docstrings/comments/prose).
 
-## On-ramps
-- Bugs → `diagnosing-bugs` (hard bug / perf loop) or `triage` (incoming request → agent-ready issue
-  that `implement` picks up).
+## Bridging context
+- `handoff` — compact the current conversation into a document a fresh agent picks up. It cross-cuts
+  the whole flow: carry context into a prototype detour and the finding back, pass a grilling session
+  to the next, or park a concept to investigate later.
+
+## Other entry points
+Ways in when you're not starting from a fresh idea:
+- A hard bug or performance problem → `diagnosing-bugs` (build a tight, red-capable repro loop
+  before theorising, then hypothesise → fix → regression-test).
+- An incoming request or issue → `triage` (categorise, verify, grill if needed, and write an
+  agent-ready brief that `implement` can pick up).
 
 ## Maintenance
-- Architectural drift → `improve-codebase-architecture` (scan the codebase, surface fixes).
+- Architectural drift or identify codebase improvements → `improve-codebase-architecture` (scan the codebase, surface fixes).
+- Merge/rebase conflicts → `resolving-merge-conflicts` (trace each side to its primary source, then reconcile intent).
 - Durable learnings → `wiki-maintain` (ingest), so the next project starts further ahead.

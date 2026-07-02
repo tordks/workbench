@@ -1,6 +1,6 @@
 ---
 name: setup-skills
-description: Converge a repo's convention docs to this workflow's — the counterpart to the upstream engineering-skills setup. Docs only; run once per repo after the skills are installed.
+description: Converge a repo's convention docs to this workflow's — the counterpart to `setup-matt-pocock-skills`. Docs only; run once per repo after the skills are installed.
 disable-model-invocation: true
 ---
 
@@ -12,7 +12,7 @@ skills: installation already happened through `npx skills`, and `setup-matt-poco
 scaffolded the generic per-repo config it converges.
 
 **Converge** means target the docs' desired end state, not a diff: re-running lands the same text
-rather than stacking edits, so it survives upstream version bumps and is always safe to re-run.
+rather than stacking edits, so it survives upgrades to the mattpocock skills and is always safe to re-run.
 
 Each **convention** is a self-contained file in [`conventions/`](conventions/). They come in two
 kinds. Most are **content conventions** — the actual rules, stated plainly with no mention of any
@@ -23,8 +23,8 @@ picks it up unchanged.
 
 The wiring — each convention's target doc and the skills that read it — lives **here**, never in the
 convention files (that keeps them portable, pure rule-text). A content convention converges a new
-vendored `docs/agents/*.md` upstream doesn't scaffold; the routing convention edits an upstream doc in
-place.
+vendored `docs/agents/*.md` that `setup-matt-pocock-skills` doesn't scaffold; the routing convention
+edits a doc it does scaffold, in place.
 
 | Convention file | Vendored target | Read by |
 |---|---|---|
@@ -66,8 +66,8 @@ Progressive disclosure: the vendored docs are the detail layer, read on demand; 
 `## Conventions` table in `CLAUDE.md` is the always-present index that routes to them. Fill one row
 per *configured* convention, taking its `Doc` and `Read by` from the wiring table above; a skipped
 convention has no row, so the table doubles as the "what's in force" manifest. Own **only** the four
-new conventions here; leave the upstream `## Agent skills` block (issue-tracker / triage-labels /
-domain) as its own index so there aren't two competing maps.
+new conventions here; leave the `## Agent skills` block that `setup-matt-pocock-skills` wrote
+(issue-tracker / triage-labels / domain) as its own index so there aren't two competing maps.
 
 The orchestrator reads this table and injects the in-force docs into each subagent; a skill used
 directly finds them through the same table. The shape:
@@ -86,9 +86,9 @@ them into each subagent. No row = not configured (skills use built-ins + config)
 ## Process
 
 ### 1. Explore
-Read the current state before changing anything: the `docs/agents/*.md` the upstream setup wrote, the
-`## Agent skills` section of `CLAUDE.md`, and each file in [`conventions/`](conventions/). If the
-upstream docs are absent, stop and ask the user to run `setup-matt-pocock-skills` first — this skill
+Read the current state before changing anything: the `docs/agents/*.md` that `setup-matt-pocock-skills`
+wrote, the `## Agent skills` section of `CLAUDE.md`, and each file in [`conventions/`](conventions/).
+If those docs are absent, stop and ask the user to run `setup-matt-pocock-skills` first — this skill
 converges those docs; it does not create them from scratch.
 
 ### 2. Present and ask, one convention at a time

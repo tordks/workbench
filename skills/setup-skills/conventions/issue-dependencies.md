@@ -12,7 +12,7 @@ native graph is the single source of truth; `backlog`'s engine reads it from the
 sorts the open issues. One place, no second copy to drift, no sync loop.
 
 A repo may instead record blockers in a `## Blocked by` section in the issue *body*. That is a
-convention `setup-skills` configures per-repo (the upstream skills do **not** write it by default);
+convention `setup-skills` configures per-repo (the mattpocock skills do **not** write it by default);
 it is turned on in the repo's issue-creation convention. Where it is in force but the native graph
 is the source of truth, treat the body as **draft input, not truth**: promote it into the tracker's
 native graph and read from the graph thereafter. The body text is authority-free.
@@ -47,12 +47,12 @@ GitHub **has** a native dependency graph, so it takes the primary path, not the 
 
 | Actor | Role |
 |---|---|
-| issue creation (upstream `to-issues`, per repo convention) | writes the *draft* `## Blocked by` body section — only where `setup-skills` turned that convention on |
+| issue creation (mattpocock `to-issues`, per repo convention) | writes the *draft* `## Blocked by` body section — only where `setup-skills` turned that convention on |
 | `promote-body-to-native.py` | GitHub: bridges those bodies into the native graph, at creation |
 | `order-from-github-deps.py` | reads GitHub's native graph → dependency order + ready set |
 | `order-from-body.py` | backstop: reads the `## Blocked by` bodies → same order + ready set |
 | `backlog` skill | runs the matching reader; presents order + reasons about next; **never writes** |
-| `triage` (upstream) | changes an issue's *state* (labels, briefs) — not its dependencies |
+| `triage` (mattpocock) | changes an issue's *state* (labels, briefs) — not its dependencies |
 
 ## Applying this to a repo
 

@@ -7,7 +7,7 @@ issue's `## Blocked by` body section instead of a native graph, then hand the no
 only where the body is the source of truth (see the issue-dependency conventions).
 
 The `## Blocked by` body section is a convention this workflow establishes per-repo (recorded in
-the repo's issue-creation convention by `setup-skills`); it is not something the upstream issue
+the repo's issue-creation convention by `setup-skills`); it is not something the mattpocock issue
 skills emit by default. This reader only works where that convention is in force.
 
 Scope: this reads issues via `gh`, so it fits a GitHub repo that keeps blockers in the body rather

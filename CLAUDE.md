@@ -35,7 +35,7 @@ Prefer the `wiki-maintain` skill (ingest / query / lint) over ad-hoc edits. Open
 
 ## Editing skills
 
-- **Never fork or edit the upstream `mattpocock/skills`.** Those install separately (`npx skills`);
+- **Never fork or edit the `mattpocock/skills`.** Those install separately (`npx skills`);
   layer on top or override a consuming repo's own docs, never patch the vendored files in place.
 - **Tooling ships inside the skill folder** (e.g. `skills/backlog/scripts/`) so it travels on install;
   nothing is copied into target repos.
