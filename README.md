@@ -11,7 +11,7 @@ An opinionated engineering setup and workflow. Two halves that fit together:
 ```
 # Install the skills — the general engineering set, then this repo's workflow skills on top
 npx skills@latest add mattpocock/skills     # select all the default skills
-npx skills@latest add tordks/workbench
+npx skills@latest add tordks/workbench      # pick the wiki and/or workflow group when prompted
 
 # Per repo, once — set up the general conventions, then converge to these on top
 /setup-matt-pocock-skills

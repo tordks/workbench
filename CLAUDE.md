@@ -41,10 +41,10 @@ maintained with Obsidian open. Open the `wiki/` folder (not the repo root) as th
 
 - **Never fork or edit the `mattpocock/skills`.** Those install separately (`npx skills`);
   layer on top or override a consuming repo's own docs, never patch the vendored files in place.
-- **Tooling ships inside the skill folder** (e.g. `skills/backlog/scripts/`) so it travels on install;
-  nothing is copied into target repos.
+- **Tooling ships inside the skill folder** (e.g. `skills/workflow/backlog/scripts/`) so it travels on
+  install; nothing is copied into target repos.
 - **SKILL.md is the generic process; specifics go in bundled reference files** reached by a pointer
-  (e.g. `setup-skills/conventions/`), so each fact has one home and adding a case is dropping a file.
+  (e.g. `workflow/setup-skills/conventions/`), so each fact has one home and adding a case is dropping a file.
 - Skill scripts are **Python, standard library + `gh` only** — no third-party deps. Shared logic
   lives in one module imported by the rest (define each meaning once).
 - For skill-authoring principles (leading words, information hierarchy, pruning), the
@@ -56,7 +56,7 @@ maintained with Obsidian open. Open the `wiki/` folder (not the repo root) as th
   `wiki/_schema.md` → lint). Run `pre-commit autoupdate` once to pin hook revs. Structural and
   semantic lint — orphans, dangling links, contradictions, near-duplicates — is the `wiki-lint`
   skill (Obsidian CLI + agent reads), not a hook.
-- **Skill scripts:** sanity-check with `python3 -m py_compile skills/backlog/scripts/*.py`.
+- **Skill scripts:** sanity-check with `python3 -m py_compile skills/workflow/backlog/scripts/*.py`.
 
 ## Folder tree
 
@@ -65,16 +65,18 @@ README.md                    # human overview + install instructions
 pyproject.toml               # config for the md-dead-link-check pre-commit hook
 .pre-commit-config.yaml      # syntactic wiki lint tier
 skills/                      # installable skills unique to this workflow (via `npx skills`)
-  backlog/                   #   present open issues in dependency order (read-only)
-    scripts/                 #     order_core / bodyparse / ghlib + the two readers + the bridge
-  setup-skills/              #   converge a repo's convention docs to these (docs only)
-    conventions/             #     the convention docs it applies (ship with the skill)
-  orchestrate/               #   drive issues/PRD to done via per-unit subagents
-  review-docs/               #   documentation-discipline review
-  wiki-capture/              #   park an idea/note/link into the wiki inbox (via Obsidian CLI)
-  wiki-query/                #   answer from the wiki, read-only (via Obsidian CLI)
-  wiki-ingest/               #   fold inbox + sources into atomic wiki pages (via Obsidian CLI)
-  wiki-lint/                 #   audit the wiki for decay (via Obsidian CLI)
+  workflow/                  #   the engineering-workflow skills — install group
+    backlog/                 #     present open issues in dependency order (read-only)
+      scripts/               #       order_core / bodyparse / ghlib + the two readers + the bridge
+    orchestrate/             #     drive issues/PRD to done via per-unit subagents
+    review-docs/             #     documentation-discipline review
+    setup-skills/            #     converge a repo's convention docs to these (docs only)
+      conventions/           #       the convention docs it applies (ship with the skill)
+  wiki/                      #   the wiki-maintaining skills — install group via `--skill 'wiki-*'`
+    wiki-capture/            #     park an idea/note/link into the wiki inbox (via Obsidian CLI)
+    wiki-query/              #     answer from the wiki, read-only (via Obsidian CLI)
+    wiki-ingest/             #     fold inbox + sources into atomic wiki pages (via Obsidian CLI)
+    wiki-lint/               #     audit the wiki for decay (via Obsidian CLI)
 wiki/                        # the Obsidian vault (open THIS as the vault, not the repo root)
   _schema.md                 #   the maintenance discipline — read first before editing the wiki
   inbox/                     #   staging lane for raw captures awaiting ingest (not the wiki layer)
