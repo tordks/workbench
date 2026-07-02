@@ -17,7 +17,7 @@ Turn the request into an ordered list of **units** — commit-sized pieces (one 
 Launch **Explore** agents (to yourself, in parallel) to clear the fog — *they* read the repo so you don't. Stay light: you collect **pointers** (paths), they read the contents. Reused across units:
 
 - The repo's **process docs** a contributor must obey — engineering principles, coding standards, contributing/domain docs.
-- The **`## Conventions` table** in `CLAUDE.md`: the in-force convention docs (coding, documentation, testing, commits) and their paths. These are reused across every unit — hold them to inject in step 3.
+- The repo's **project conventions** — the in-force convention docs (coding, documentation, testing, commits) and their paths. Reused across every unit — hold them to inject in step 3.
 - Per unit: paths to the exact files, interfaces, and tests it touches.
 
 Done when, for every unit, you hold a **tight file list** and the doc paths its subagent must read — enough that the subagent never discovers the repo itself. Reading those files is the subagent's job — open one yourself only when its contents change *how* you delegate. If reading it wouldn't change the delegation, leave it for the subagent.

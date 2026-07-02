@@ -48,7 +48,7 @@ For every convention, the user picks one mode. The convention file supplies the 
 this list is the shared machinery:
 
 - **Skip** — no doc. Skills fall back to their built-ins plus the repo's config. The convention gets
-  no row in the `## Conventions` table.
+  no row in the `## Project conventions` table.
 - **Accept the shipped default** — stamp the convention file's rule-text into the vendored doc. The
   convention file is the single source of truth; because this skill *converges*, re-running re-stamps
   from that same file, so the copy in the repo can't silently drift from it.
@@ -60,10 +60,10 @@ leave it untouched — convergence only re-stamps a doc still on the shipped def
 already encoded in the repo's linter/formatter config are never stamped; the convention files defer to
 that config rather than restating it.
 
-## The `## Conventions` table in `CLAUDE.md`
+## The `## Project conventions` table in `CLAUDE.md`
 
 Progressive disclosure: the vendored docs are the detail layer, read on demand; a compact
-`## Conventions` table in `CLAUDE.md` is the always-present index that routes to them. Fill one row
+`## Project conventions` table in `CLAUDE.md` is the always-present index that routes to them. Fill one row
 per *configured* convention, taking its `Doc` and `Read when` from the wiring table above; a skipped
 convention has no row, so the table doubles as the "what's in force" manifest. Own **only** the four
 new conventions here; leave the `## Agent skills` block that `setup-matt-pocock-skills` wrote
@@ -74,7 +74,7 @@ rather than loading all of them up front; the orchestrator routes the in-force d
 same way. The shape:
 
 ```markdown
-## Conventions
+## Project conventions
 
 Where this repo's conventions live. Read a doc when its **Read when** applies — pull in only what the
 task needs, not all of them up front. No row = not configured (skills use built-ins + config).
@@ -104,7 +104,7 @@ Show a draft of each vendored-doc change before writing it. Let the user edit fi
 ### 4. Converge
 Edit each target vendored doc to the end state its convention file and the chosen mode specify.
 Update in place; leave surrounding sections the user may have edited untouched. Then converge the
-`## Conventions` table. Done when every convention in `conventions/` is reflected in the repo's
+`## Project conventions` table. Done when every convention in `conventions/` is reflected in the repo's
 `docs/agents/*.md` and the table matches what's configured.
 
 ### 5. Report
