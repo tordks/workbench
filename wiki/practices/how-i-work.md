@@ -25,9 +25,11 @@ The path most work travels, from idea to shipped code. The named steps are skill
 3. **Split the work:**
    - Multi-session build → `to-prd` → `to-issues` (independently grabbable issues).
    - Single session → go straight to implementation.
-4. **Build** — `orchestrate` for multi-unit work (delegate each unit's TDD to a subagent, review,
+4. **Pick what's next** — `backlog` presents the open issues in dependency order (ready / blocked /
+   underspecified) so you choose the next unit. It reads, never writes.
+5. **Build** — `orchestrate` for multi-unit work (delegate each unit's TDD to a subagent, review,
    commit per unit); or `implement` for a single unit.
-5. **Review** — `review` (code) + `review-docs` (docstrings/comments/prose).
+6. **Review** — `review` (code) + `review-docs` (docstrings/comments/prose).
 
 ## On-ramps
 - Bugs / incoming requests → `triage` → produces agent-ready issues that `implement` picks up.

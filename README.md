@@ -10,7 +10,9 @@ workflow-vault/
     wiki-maintain/ #   ingest / query / lint the wiki
     orchestrate/   #   delegated multi-unit implementation
     review-docs/   #   documentation-discipline review
-    router/        #   which-skill-fits index (+ pointers to upstream skills)
+    setup-skills/  #   converge a repo's convention docs to mine (docs only; peer to the upstream setup)
+      conventions/ #     the convention docs it applies (ships with the skill, not the vault wiki)
+    backlog/       #   present issues in dependency order (order-from-github-deps / order-from-body readers + promote-body-to-native bridge)
   wiki/            # the Obsidian vault (the karpathy wiki)
     _schema.md     #   the rules an agent follows to maintain the vault — read this first
     concepts/  practices/  references/  sources/  maps/
@@ -61,5 +63,3 @@ them current instead of forking:
 ```
 npx skills@latest add mattpocock/skills
 ```
-
-Not sure which skill fits? Invoke `router`.
