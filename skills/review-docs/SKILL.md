@@ -31,7 +31,7 @@ Review that compact bundle and open full source only for a unit whose docstring 
 
 ## Rules
 
-Flag every place the docs break one of these, and anything that departs from the documentation conventions already in force in the repo:
+Flag every place the docs break one of these. Where the repo carries a `docs/agents/doc-conventions.md`, that doc is the repo's documentation conventions in force — read it and enforce it in place of this list.
 
 1. **No meta-commentary.** Docs say what something does, and why a non-obvious decision holds — never issue or task IDs, PR or session narrative, or "why this change was made." That context belongs in the tracker, not in files that outlive the work.
 

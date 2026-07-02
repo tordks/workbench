@@ -17,17 +17,18 @@ Turn the request into an ordered list of **units** — commit-sized pieces (one 
 Launch **Explore** agents (to yourself, in parallel) to clear the fog — *they* read the repo so you don't. Stay light: you collect **pointers** (paths), they read the contents. Reused across units:
 
 - The repo's **process docs** a contributor must obey — engineering principles, coding standards, contributing/domain docs.
+- The **`## Conventions` table** in `CLAUDE.md`: the in-force convention docs (coding, documentation, testing, commits) and their paths. These are reused across every unit — hold them to inject in step 3.
 - Per unit: paths to the exact files, interfaces, and tests it touches.
 
 Done when, for every unit, you hold a **tight file list** and the doc paths its subagent must read — enough that the subagent never discovers the repo itself. Reading those files is the subagent's job — open one yourself only when its contents change *how* you delegate. If reading it wouldn't change the delegation, leave it for the subagent.
 
 ## 3. Delegate
 
-Spawn **one subagent** (model: sonnet) per unit to build it. Its prompt must tell it to:
+Spawn **one subagent** (model: sonnet) per unit to build it. **Carry the in-force convention docs from step 2 inline in its prompt** — hand them over so it builds against them without discovering them. Its prompt must tell it to:
 
 - Maintain a **tasklist** for the unit: break the work into tasks up front, keep exactly one in-progress, and mark each done as it lands — so its progress is legible without you interrupting.
 - Run the `/implement` skill and follow it.
-- Read first, before any code: the process docs and the scoped file list from step 2.
+- Read first, before any code: the process docs, those convention docs, and the scoped file list from step 2.
 - Implement only this unit; **don't commit** — leave the tree dirty for review.
 - **Gate its own changes before reporting**: typecheck, lint/format, and run this unit's tests — all green and clean. This gating is the subagent's job, not yours; you won't re-run it.
 
@@ -39,7 +40,7 @@ Done when the subagent reports its tests green and typecheck/lint clean.
 
 ## 5. Review
 
-Run `/code-review` on this unit's changes against the last commit, passing the docs from step 2, and `/review-docs` alongside it for document discipline — the two are independent axes. **Wait for all reviews to return**, then triage their findings together: each is a real defect, spec gap, or docs violation to fix, or a judgement call you decide and note. Hand the *whole* set of blocking findings to a **single** fix subagent (model: sonnet) so it fixes them in one pass — never launch a fixer before every review is in, or a later review's findings collide with an edit already underway. You don't fix anything yourself. The fix subagent's prompt carries the context it needs to act without rediscovering the unit: every finding, the process docs and file list from step 2, and the failing change.
+Run `/code-review` on this unit's changes against the last commit, passing the docs and in-force convention docs from step 2, and `/review-docs` alongside it (with the documentation convention doc) for document discipline — the two are independent axes. **Wait for all reviews to return**, then triage their findings together: each is a real defect, spec gap, or docs violation to fix, or a judgement call you decide and note. Hand the *whole* set of blocking findings to a **single** fix subagent (model: sonnet) so it fixes them in one pass — never launch a fixer before every review is in, or a later review's findings collide with an edit already underway. You don't fix anything yourself. The fix subagent's prompt carries the context it needs to act without rediscovering the unit: every finding, the process docs and file list from step 2, and the failing change.
 
 It must **re-gate its own changes** (typecheck, lint, this unit's tests) green before reporting — same as step 3, so you don't re-run them. Done when every blocking finding is resolved or explicitly waived.
 
