@@ -26,12 +26,16 @@ that context belongs in the tracker, not in files that outlive the work.
 ## Editing the wiki
 
 **Read `wiki/_schema.md` first.** It is the canonical maintenance discipline and every wiki edit
-obeys it — the closed set of page types, the three layers, and the ingest / query / lint operations.
-Key invariants: `sources/` is **immutable** (read, never rewrite); every page declares exactly one
-`type`; cross-link liberally with `[[wikilinks]]`.
+obeys it — the closed set of page types, the three layers plus the `inbox/` staging lane, and the
+capture / query / ingest / lint operations. Key invariants: `sources/` is **immutable** (read, never
+rewrite); every page declares exactly one `type`; cross-link liberally with `[[wikilinks]]`.
 
-Prefer the `wiki-maintain` skill (ingest / query / lint) over ad-hoc edits. Open the `wiki/` folder
-(not the repo root) as the Obsidian vault, so `skills/` stays out of the graph.
+Prefer the `wiki-*` skills (`wiki-capture`, `wiki-query`, `wiki-ingest`, `wiki-lint`) over ad-hoc
+edits. These skills reach the vault through the **Obsidian CLI** (they run wherever the agent runs,
+so they cannot assume filesystem access — each reads `_schema.md` via the CLI first); this is a
+deliberate exception to the stdlib-only rule below, justified because the wiki lives only here and is
+maintained with Obsidian open. Open the `wiki/` folder (not the repo root) as the Obsidian vault, so
+`skills/` stays out of the graph.
 
 ## Editing skills
 
@@ -49,8 +53,9 @@ Prefer the `wiki-maintain` skill (ingest / query / lint) over ad-hoc edits. Open
 ## Dev setup
 
 - **Lint:** `pre-commit run --files <changed-file> …` (dead-link + markdown-style checks; see
-  `wiki/_schema.md` → lint). Run `pre-commit autoupdate` once to pin hook revs. Semantic lint —
-  contradictions, near-duplicates, orphans — is the `wiki-maintain` lint operation, not a hook.
+  `wiki/_schema.md` → lint). Run `pre-commit autoupdate` once to pin hook revs. Structural and
+  semantic lint — orphans, dangling links, contradictions, near-duplicates — is the `wiki-lint`
+  skill (Obsidian CLI + agent reads), not a hook.
 - **Skill scripts:** sanity-check with `python3 -m py_compile skills/backlog/scripts/*.py`.
 
 ## Folder tree
@@ -66,8 +71,12 @@ skills/                      # installable skills unique to this workflow (via `
     conventions/             #     the convention docs it applies (ship with the skill)
   orchestrate/               #   drive issues/PRD to done via per-unit subagents
   review-docs/               #   documentation-discipline review
-  wiki-maintain/             #   ingest / query / lint the wiki
+  wiki-capture/              #   park an idea/note/link into the wiki inbox (via Obsidian CLI)
+  wiki-query/                #   answer from the wiki, read-only (via Obsidian CLI)
+  wiki-ingest/               #   fold inbox + sources into atomic wiki pages (via Obsidian CLI)
+  wiki-lint/                 #   audit the wiki for decay (via Obsidian CLI)
 wiki/                        # the Obsidian vault (open THIS as the vault, not the repo root)
   _schema.md                 #   the maintenance discipline — read first before editing the wiki
+  inbox/                     #   staging lane for raw captures awaiting ingest (not the wiki layer)
   concepts/ practices/ references/ sources/ maps/
 ```

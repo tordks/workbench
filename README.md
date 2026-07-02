@@ -31,7 +31,8 @@ this repo and some from the matt pocock skills. At a glance the steps are:
 3. **Pick what's next** — `/backlog` presents the open issues in dependency order.
 4. **Build** — `/orchestrate` delegates each unit to a subagent sequentially, or you implement a single unit directly with `/implement`.
 5. **Review** — `/code-review` for code against standards and spec, `/review-docs` for docstrings/comments/prose. Run automatically after each unit by `/orchestrate`
-6. **Bank the learnings** — `/wiki-maintain` ingests durable findings into the wiki.
+6. **Bank the learnings** — `/wiki-capture` parks durable findings to the wiki inbox; `/wiki-ingest`
+   folds them into the wiki.
 
 For the full sett of skills and how to use them see [`workflow`](wiki/practices/workflow.md).
 
@@ -42,17 +43,19 @@ A [karpathy-style LLM wiki](https://gist.github.com/karpathy/442a6bf555914893e98
 knowledge base **written and read mainly by agents**, so durable learnings from one project carry
 into the next. It has three layers — immutable **raw sources** (`sources/`), an agent-owned
 **synthesized wiki**, and a **schema doc** (`wiki/_schema.md`) that teaches an agent how to maintain
-it — and the agent works it through three operations: **ingest**, **query**, **lint**. Step 6 of the
-workflow ingests into it; later work queries it.
+it — plus an `inbox/` staging lane for raw captures. The agent works it through four operations, one
+skill each: **capture** (`inbox/`), **query**, **ingest**, **lint**. Step 6 of the workflow captures
+and ingests into it; later work queries it.
 
-**The tooling is still in progress on both sides.** The `wiki-maintain` skill
-*the agent uses to read
-and edit the wiki is unreviewed and unfinished, and the human-facing side is
-thin: for now you can open the `wiki/` folder as an Obsidian vault to read and
-hand-edit it; a minimal `.obsidian/` config is committed.
+**The tooling is still in progress on both sides.** The `wiki-*` skills the agent uses to read and
+edit the wiki reach the vault through the **Obsidian CLI** (so they run wherever the agent runs, and
+depend on Obsidian being available); they are unreviewed and unfinished, and the human-facing side is
+thin: for now you can open the `wiki/` folder as an Obsidian vault to read and hand-edit it; a minimal
+`.obsidian/` config is committed.
 
 Two lint tiers guard against decay:
 - **Syntactic (automated):** `pre-commit install`, then every commit runs dead-link, broken-anchor,
   and markdown-style checks.
-- **Semantic (on demand):** the `wiki-maintain` skill's *lint* — an agent reads for contradictions,
-  near-duplicates, orphans, stale claims, and tag drift (no tool does this).
+- **Structural + semantic (on demand):** the `wiki-lint` skill — the Obsidian CLI finds orphans,
+  dangling links, and dead-ends; the agent reads for contradictions, near-duplicates, stale claims,
+  provenance drift, and tag drift (no tool does the reading).

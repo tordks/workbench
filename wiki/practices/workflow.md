@@ -58,4 +58,6 @@ Ways in when you're not starting from a fresh idea:
 ## Maintenance
 - Architectural drift or identify codebase improvements → `improve-codebase-architecture` (scan the codebase, surface fixes).
 - Merge/rebase conflicts → `resolving-merge-conflicts` (trace each side to its primary source, then reconcile intent).
-- Durable learnings → `wiki-maintain` (ingest), so the next project starts further ahead.
+- Durable learnings → `wiki-capture` parks them to the wiki `inbox/` mid-task; `wiki-ingest` later
+  folds the inbox (and named sources) into atomic pages, so the next project starts further ahead.
+  `wiki-query` reads the wiki; `wiki-lint` audits it. All four reach the vault via the Obsidian CLI.

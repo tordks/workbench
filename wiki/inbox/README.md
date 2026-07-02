@@ -1,0 +1,1 @@
+- Staging lane for raw captures awaiting `wiki-ingest`. Not part of the synthesized wiki; not linted as wiki pages. See `../_schema.md`.

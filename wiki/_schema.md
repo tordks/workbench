@@ -23,6 +23,10 @@ rather than a generic chatbot.
    pages. The agent owns this layer entirely.
 3. **The schema** (this file) — how the wiki is structured and maintained.
 
+The **inbox** (`inbox/`) is a staging *lane*, not a layer: raw, mutable captures — ideas, notes,
+links — awaiting ingest. `capture` appends to it; `ingest` drains and consumes it. It is not part of
+the synthesized wiki and is not linted as wiki pages.
+
 ## Page types
 
 Every page declares exactly one `type` in frontmatter. The set is closed — do not invent new types.
@@ -79,31 +83,42 @@ Adding a tag means adding it here first. Seed vocabulary:
   it marks a page worth writing.
 - Navigation is by **Maps of Content**, not deep folders. A page can belong to many maps at once.
 
+## Provenance
+
+`source:` frontmatter ties a page to its raw material; per-claim markers say how load-bearing each
+claim is, so `lint` can tell knowledge from speculation. Every synthesized claim is one of:
+
+- **extracted** (default) — stated by a source. No marker needed.
+- **inferred** — the agent's synthesis, not stated by any source. Mark inline `^[inferred]`.
+- **ambiguous** — sources disagree. Mark inline `^[ambiguous]` and name the disagreement.
+
+A page that has drifted mostly to `inferred` / `ambiguous` is speculation-heavy — `lint` flags it.
+
 ## Operations
 
-The agent maintains the wiki through exactly three operations. The procedure lives in the
-`wiki-maintain` skill; the *rules* live here.
+Four operations, one skill each — `wiki-capture`, `wiki-query`, `wiki-ingest`, `wiki-lint`. The
+*procedure* lives in the skill; this file holds the *rules* it obeys. The skills run wherever the
+agent runs, so they reach this vault — including this file — through the **Obsidian CLI**, and each
+reads `_schema.md` first. The rules each operation must honour:
 
-### ingest
-Fold a new source into the wiki. Capture the raw material in `sources/` (immutable) + a `source`
-stub, then decompose it into atomic ideas. For each idea: **search the vault first** — if a page
-exists, update it; if not, create one atomic page of the right type. Link every synthesized page
-back to its `source`. Touching 5–15 related pages per source is normal.
-
-### query
-Answer a question from the wiki. If the answer is durable and not yet captured, file it back as a
-new page.
-
-### lint
-The entropy defense. Two tiers:
-- **Syntactic (automated, pre-commit):** broken links, dead URLs, missing anchors, markdown style.
-  Run by CLI tools — see repo `.pre-commit-config.yaml`.
-- **Semantic (on-demand, agent):** contradictions, near-duplicate pages, orphans, coverage gaps,
-  taxonomy/tag drift, stale claims. No tool does this — the agent must read.
+- **capture** appends one raw idea/note/link per file to `inbox/`; synthesis is `ingest`'s job.
+- **ingest** drains the inbox and folds named sources in. Capture external material to `sources/`
+  (immutable) + a `source` stub; **search the vault before creating** any page, so you extend an
+  existing one instead of duplicating an idea. A contradiction is gated, not overwritten (see
+  Autonomy).
+- **query** reads the wiki; it never writes. A durable answer that isn't captured goes back through
+  `capture`, not a direct page write.
+- **lint** is the entropy defense, in two tiers: *automated* (pre-commit — broken links, dead URLs,
+  markdown style; see `.pre-commit-config.yaml`) and *on-demand* (the `wiki-lint` skill — structural
+  graph checks plus semantic checks the agent must read for).
 
 ## Autonomy rules
 
-- **Autonomous:** creating new pages and adding to existing ones.
-- **Approval-gated:** overwriting existing content, resolving contradictions, and any deletion.
+- **Autonomous:** creating new pages and adding to existing ones; appending captures to `inbox/`.
+- **Approval-gated:** overwriting existing content, resolving contradictions, and any deletion of a
+  wiki page or source.
+- **Inbox is staging:** deleting an inbox item *after* `ingest` has folded it in is autonomous — git
+  preserves the trail. This is the one deletion that is not gated; it never touches `sources/` or the
+  wiki layer.
 - **Never delete or overwrite raw `sources/` — ever.** When new info contradicts a page, do not
   silently overwrite; reconcile and flag for the human. Git diff is the safety net — commit small.
