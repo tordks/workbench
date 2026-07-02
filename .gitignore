@@ -1,0 +1,24 @@
+# Obsidian — commit config, ignore per-machine churn
+wiki/.obsidian/workspace.json
+wiki/.obsidian/workspace-mobile.json
+wiki/.obsidian/cache
+wiki/.obsidian/plugins/
+wiki/.obsidian/*.bak
+
+# Smart Connections local embeddings
+.smart-env/
+wiki/.smart-env/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store

@@ -1,0 +1,22 @@
+# Syntactic lint tier for the wiki (see wiki/_schema.md → lint).
+# Revs are placeholders — run `pre-commit autoupdate` once to pin current versions.
+repos:
+  - repo: https://github.com/AlexanderDokuchaev/md-dead-link-check
+    rev: v1.2.0
+    hooks:
+      - id: md-dead-link-check   # dead URLs, broken file refs, missing heading anchors
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.1
+    hooks:
+      - id: markdownlint-cli2    # markdown style / frontmatter shape
+
+  # Optional local internal-link check (no network). Requires `mlc` on PATH:
+  #   cargo install mlc   OR   download a binary from github.com/becheran/mlc
+  # - repo: local
+  #   hooks:
+  #     - id: mlc-offline
+  #       name: mlc (offline internal links)
+  #       entry: mlc --offline wiki
+  #       language: system
+  #       pass_filenames: false

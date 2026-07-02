@@ -1,0 +1,5 @@
+[tool.md_dead_link_check]
+# Config for the pre-commit dead-link hook. See wiki/_schema.md → lint (syntactic tier).
+timeout = 10
+exclude_files = []
+exclude_links = []
