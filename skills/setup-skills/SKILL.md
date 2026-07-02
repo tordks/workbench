@@ -1,13 +1,13 @@
 ---
 name: setup-skills
-description: Converge a repo's convention docs to mine — the counterpart to the upstream engineering-skills setup. Docs only; run once per repo after the skills are installed.
+description: Converge a repo's convention docs to this workflow's — the counterpart to the upstream engineering-skills setup. Docs only; run once per repo after the skills are installed.
 disable-model-invocation: true
 ---
 
 # setup-skills
 
-Converge the repo's agent docs to my conventions — the counterpart to `setup-matt-pocock-skills`, but
-for *my* conventions. It writes docs only. It never installs or checks
+Converge the repo's agent docs to this workflow's conventions — the counterpart to
+`setup-matt-pocock-skills`, but for *these* conventions. It writes docs only. It never installs or checks
 skills: installation already happened through `npx skills`, and `setup-matt-pocock-skills` has already
 scaffolded the generic per-repo config it converges.
 

@@ -1,7 +1,7 @@
 ---
 type: practice
-title: How I Work
-aliases: [workflow, how-i-work]
+title: The Workflow
+aliases: [workflow]
 tags: [workflow]
 created: 2026-07-02
 updated: 2026-07-02
@@ -9,7 +9,7 @@ status: draft
 related: ["[[python-project]]", "[[react-vite-project]]"]
 ---
 
-# How I Work
+# The Workflow
 
 > **status: draft** — this is a first pass to correct, not gospel. Edit it until it matches reality.
 

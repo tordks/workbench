@@ -1,65 +1,58 @@
 # workbench
 
-My engineering setup and how I work — a **karpathy-style LLM wiki** plus the **skills** unique to my
-workflow. The wiki is knowledge an LLM agent maintains and grows over time; the skills are tooling,
-installable into any agent.
+An opinionated engineering setup and workflow. Two halves that fit together:
+
+- a **karpathy-style LLM wiki** (`wiki/`)
+- the **skills** (`skills/`) unique to this workflow
+
+
+## Quickstart
 
 ```
-workbench/
-  skills/          # my own agent skills (installable via the `skills` CLI)
-    wiki-maintain/ #   ingest / query / lint the wiki
-    orchestrate/   #   delegated multi-unit implementation
-    review-docs/   #   documentation-discipline review
-    setup-skills/  #   converge a repo's convention docs to mine (docs only; peer to the upstream setup)
-      conventions/ #     the convention docs it applies (ships with the skill, not the vault wiki)
-    backlog/       #   present issues in dependency order (order-from-github-deps / order-from-body readers + promote-body-to-native bridge)
-  wiki/            # the Obsidian vault (the karpathy wiki)
-    _schema.md     #   the rules an agent follows to maintain the vault — read this first
-    concepts/  practices/  references/  sources/  maps/
+# Install the skills — the general engineering set, then this repo's workflow skills on top
+npx skills@latest add mattpocock/skills     # select all the default skills
+npx skills@latest add tordks/workbench
+
+# Per repo, once — set up the general conventions, then converge to these on top
+/setup-matt-pocock-skills
+/setup-skills
+
+# To edit the wiki: open `wiki/` (not the repo root) as an Obsidian vault, then `pre-commit install`
 ```
+
+
+## The workflow
+
+The path most work travels, from idea to shipped code. Each named step is a skill. Some defined in
+this repo and some from the matt pocock skills. At a glance the steps are:
+
+1. **Sharpen the idea** — interview until the plan/spec holds together; prototype when a question needs a runnable answer.
+2. **Split the work** — a multi-session build becomes a PRD, then independently grabbable issues; a single session goes straight to implementation.
+3. **Pick what's next** — `/backlog` presents the open issues in dependency order.
+4. **Build** — `/orchestrate` delegates each unit to a subagent sequentially, or you implement a single unit directly with `/implement`.
+5. **Review** — `/code-review` for code against standards and spec, `/review-docs` for docstrings/comments/prose. Run automatically after each unit by `/orchestrate`
+6. **Bank the learnings** — `/wiki-maintain` ingests durable findings into the wiki.
+
+For the full sett of skills and how to use them see [`workflow`](wiki/practices/workflow.md).
+
 
 ## The wiki
 
-A [karpathy LLM wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): three
-layers — immutable **raw sources** (`sources/`), an LLM-owned **synthesized wiki**, and a **schema
-doc** (`wiki/_schema.md`) that teaches an agent how to maintain it. The agent maintains it through
-three operations — **ingest**, **query**, **lint** — all defined in `_schema.md` and driven by the
-`wiki-maintain` skill.
+A [karpathy-style LLM wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a
+knowledge base **written and read mainly by agents**, so durable learnings from one project carry
+into the next. It has three layers — immutable **raw sources** (`sources/`), an agent-owned
+**synthesized wiki**, and a **schema doc** (`wiki/_schema.md`) that teaches an agent how to maintain
+it — and the agent works it through three operations: **ingest**, **query**, **lint**. Step 6 of the
+workflow ingests into it; later work queries it.
 
-### Open it in Obsidian
-Open the `wiki/` folder as an Obsidian vault (not the repo root — that keeps `skills/` out of the
-graph). Minimal `.obsidian/` config is committed; per-machine churn is gitignored.
+**The tooling is still in progress on both sides.** The `wiki-maintain` skill
+*the agent uses to read
+and edit the wiki is unreviewed and unfinished, and the human-facing side is
+thin: for now you can open the `wiki/` folder as an Obsidian vault to read and
+hand-edit it; a minimal `.obsidian/` config is committed.
 
-**Recommended plugins** (for human editing sessions — the agent maintains the vault via CLI and
-doesn't need them):
-- Core: Backlinks, Outgoing links, Graph, Properties, **Bases**, Canvas
-- **Obsidian Git** — for diff/history. Keep **auto commit-and-sync OFF** (the agent/CLI is the sole
-  committer; auto-sync races external writes and fights `.git/index.lock`).
-- **Templater + QuickAdd** — convention-enforcing note creation
-- **Smart Connections** — local-embedding "related notes" while you browse (the one thing an
-  external agent can't do live)
-- Quality-of-life: Advanced Tables, Commander, Homepage, and Dataview + Dataview Serializer if you
-  need queries Bases can't express
-
-### Keep it from rotting (lint)
+Two lint tiers guard against decay:
 - **Syntactic (automated):** `pre-commit install`, then every commit runs dead-link, broken-anchor,
-  and markdown-style checks. Run `pre-commit autoupdate` once to pin current hook versions.
-- **Semantic (on demand):** run the `wiki-maintain` skill's *lint* — the agent reads for
-  contradictions, near-duplicates, orphans, stale claims, and tag drift (no tool does this).
-
-## The skills
-
-Install into any agent (Claude Code, Cursor, Codex, …) with the [`skills`
-CLI](https://github.com/vercel-labs/skills):
-
-```
-npx skills@latest add tordks/workbench
-```
-
-You'll be prompted to pick which skills and which agent. Only the skills **unique to my workflow**
-live here; the general engineering skills come from upstream — install those separately and keep
-them current instead of forking:
-
-```
-npx skills@latest add mattpocock/skills
-```
+  and markdown-style checks.
+- **Semantic (on demand):** the `wiki-maintain` skill's *lint* — an agent reads for contradictions,
+  near-duplicates, orphans, stale claims, and tag drift (no tool does this).

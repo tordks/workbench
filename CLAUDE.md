@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 This repo holds two independent products: a **karpathy-style LLM wiki** (`wiki/`) and the **skills
-unique to my workflow** (`skills/`). `README.md` is the human overview; this file is the working
+unique to this workflow** (`skills/`). `README.md` is the human overview; this file is the working
 discipline for an agent editing either. Read the relevant section before you touch that half.
 
 ## The dividing line
@@ -59,10 +59,10 @@ Prefer the `wiki-maintain` skill (ingest / query / lint) over ad-hoc edits. Open
 README.md                    # human overview + install instructions
 pyproject.toml               # config for the md-dead-link-check pre-commit hook
 .pre-commit-config.yaml      # syntactic wiki lint tier
-skills/                      # installable skills unique to my workflow (via `npx skills`)
+skills/                      # installable skills unique to this workflow (via `npx skills`)
   backlog/                   #   present open issues in dependency order (read-only)
     scripts/                 #     order_core / bodyparse / ghlib + the two readers + the bridge
-  setup-skills/              #   converge a repo's convention docs to mine (docs only)
+  setup-skills/              #   converge a repo's convention docs to these (docs only)
     conventions/             #     the convention docs it applies (ship with the skill)
   orchestrate/               #   drive issues/PRD to done via per-unit subagents
   review-docs/               #   documentation-discipline review
