@@ -62,6 +62,7 @@ maintained with Obsidian open. Open the `wiki/` folder (not the repo root) as th
 
 ```
 README.md                    # human overview + install instructions
+.claude-plugin/              # marketplace.json — declares the wiki + workflow install groups
 pyproject.toml               # config for the md-dead-link-check pre-commit hook
 .pre-commit-config.yaml      # syntactic wiki lint tier
 skills/                      # installable skills unique to this workflow (via `npx skills`)
