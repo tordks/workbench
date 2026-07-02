@@ -1,0 +1,9 @@
+{
+  "name": "workflow",
+  "skills": [
+    "./skills/workflow/backlog",
+    "./skills/workflow/orchestrate",
+    "./skills/workflow/review-docs",
+    "./skills/workflow/setup-skills"
+  ]
+}
