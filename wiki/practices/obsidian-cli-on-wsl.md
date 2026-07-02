@@ -7,14 +7,13 @@ created: 2026-07-02
 updated: 2026-07-02
 status: seed
 source: "[[obsidian-cli-docs]]"
-related: ["[[workflow]]", "[[_schema]]"]
+related: []
 ---
 
 # Running the Obsidian CLI on WSL
 
-How to make the `obsidian` command reach the vault when the vault lives on **WSL** but Obsidian runs
-on **Windows**. The `wiki-*` skills call this command to read and write the vault, so it has to
-resolve to the right vault from any directory.
+How to make the `obsidian` command reach a vault when the vault lives on **WSL** but Obsidian runs on
+**Windows**, so the command resolves to the right vault from any working directory.
 
 ## The mental model
 
@@ -25,8 +24,7 @@ vault you hit.
 
 ## Windows side — the human prerequisite
 
-These operate **outside the project** and cannot be scripted from an agent running in WSL; do them by
-hand once:
+These operate **Windows-side** and cannot be scripted from within WSL; do them by hand once:
 
 1. Upgrade Obsidian to **1.12.7+** (the CLI ships with that installer).
 2. In Obsidian: **Settings → General → enable "Command line interface"**, then follow the prompt to
@@ -42,23 +40,31 @@ Reach the Windows binary over interop and wrap it so the current directory never
 Once, in WSL:
 
 1. Confirm interop reaches it: `obsidian.exe version` prints a version. If `command not found`, ensure
-   `/etc/wsl.conf` has `[interop]` `appendWindowsPath = true` (the default) and that Obsidian is on the
-   Windows PATH, then `wsl --shutdown` and reopen.
-2. Find the vault name: `obsidian.exe vaults` lists them; note the exact name backing the `wiki/` folder.
+   `/etc/wsl.conf` has the following (the default) and that Obsidian is on the Windows PATH, then
+   `wsl --shutdown` and reopen.
+
+   ```ini
+   [interop]
+   appendWindowsPath = true
+   ```
+2. Find the vault name: `obsidian.exe vaults` lists them; note the exact name of the vault you want.
 3. Create `~/bin/obsidian`, executable, pinning the vault and stripping CRLF:
 
    ```bash
    #!/bin/bash
-   obsidian.exe "vault=<NAME>" "$@" 2>&1 | tr -d '\r'
+   vault="${OBSIDIAN_VAULT:-<NAME>}"
+   obsidian.exe "vault=$vault" "$@" 2>&1 | tr -d '\r'
    ```
 
-   `vault=<NAME>` must be the first argument — the CLI wants the vault selector before the command, so a
-   wiki skill run from another repo still hits this vault. ^[inferred] `tr -d '\r'` strips the carriage
-   returns the Windows console appends, which otherwise corrupt every parse.
+   The `vault=` selector must be the first argument — the CLI wants it before the command, so a call
+   from any working directory still hits the right vault. ^[inferred] `<NAME>` is the baked-in default;
+   `OBSIDIAN_VAULT` overrides it for a single call (`OBSIDIAN_VAULT=other obsidian read foo.md`) without
+   editing the script. `tr -d '\r'` strips the carriage returns the Windows console appends, which
+   otherwise corrupt every parse.
 4. Put `~/bin` ahead on PATH (`export PATH="$HOME/bin:$PATH"` in `~/.zshrc`) so `obsidian` resolves to
    the wrapper, not the bare `.exe`.
-5. Verify from a directory **outside** the repo: `obsidian read _schema.md` prints the schema clean
-   (no stray `\r`), proving the vault pin and CRLF strip both hold.
+5. Verify from an arbitrary directory: `obsidian read <some-note>.md` prints the note clean (no stray
+   `\r`), proving the vault pin and CRLF strip both hold.
 
 ## Gotchas
 

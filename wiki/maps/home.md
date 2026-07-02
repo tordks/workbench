@@ -25,5 +25,8 @@ The front door to the vault. Open this first.
 ## Concepts
 - [[blast-radius|Blast radius]]
 
+## References
+- [[obsidian-local-rest-api|Obsidian Local REST API + MCP]]
+
 ## Maps
 _(add topic MOCs here as the vault grows)_

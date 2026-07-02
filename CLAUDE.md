@@ -25,6 +25,12 @@ that context belongs in the tracker, not in files that outlive the work.
 
 ## Editing the wiki
 
+**The wiki is an *instance* of a wiki, not documentation for this repo's tools.** Its pages are
+general, standalone knowledge about their subject. A page must never explain why its subject "fits the
+wiki", frame its content in terms of the wiki/skills, or otherwise turn self-referential — write it as
+if the reader has never heard of this repo. (A `practice` page for a workflow-specific procedure may
+name the skills it serves; a `concept`/`reference`/`source` page states the general fact and stops.)
+
 **Read `wiki/_schema.md` first.** It is the canonical maintenance discipline and every wiki edit
 obeys it — the closed set of page types, the three layers plus the `inbox/` staging lane, and the
 capture / query / ingest / lint operations. Key invariants: `sources/` is **immutable** (read, never
