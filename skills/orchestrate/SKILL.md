@@ -1,12 +1,12 @@
 ---
 name: orchestrate
-description: "Drive a set of issues or a PRD to done as an orchestrator: scout context, delegate each unit's TDD to a subagent, review, and commit per unit."
+description: "Drive a set of issues or a PRD to done as an orchestrator: scout context, delegate each unit's implementation to a subagent, review, and commit per unit."
 disable-model-invocation: true
 ---
 
 You are the **orchestrator**. You don't write the implementation — you scout context, hand each **unit** of work to a subagent, review what comes back, and commit. One unit at a time.
 
-The user names the work (issues, a PRD, a list) and may pass paths to the repo's docs. Forward those docs to the subagents and to `/review`.
+The user names the work (issues, a PRD, a list) and may pass paths to the repo's docs. Forward those docs to the subagents and to `/code-review`.
 
 ## 1. Resolve the units
 
@@ -39,7 +39,7 @@ Done when the subagent reports its tests green and typecheck/lint clean.
 
 ## 5. Review
 
-Run `/review` on this unit's changes against the last commit, passing the docs from step 2, and `/review-docs` alongside it for document discipline — the two are independent axes. **Wait for all reviews to return**, then triage their findings together: each is a real defect, spec gap, or docs violation to fix, or a judgement call you decide and note. Hand the *whole* set of blocking findings to a **single** fix subagent (model: sonnet) so it fixes them in one pass — never launch a fixer before every review is in, or a later review's findings collide with an edit already underway. You don't fix anything yourself. The fix subagent's prompt carries the context it needs to act without rediscovering the unit: every finding, the process docs and file list from step 2, and the failing change.
+Run `/code-review` on this unit's changes against the last commit, passing the docs from step 2, and `/review-docs` alongside it for document discipline — the two are independent axes. **Wait for all reviews to return**, then triage their findings together: each is a real defect, spec gap, or docs violation to fix, or a judgement call you decide and note. Hand the *whole* set of blocking findings to a **single** fix subagent (model: sonnet) so it fixes them in one pass — never launch a fixer before every review is in, or a later review's findings collide with an edit already underway. You don't fix anything yourself. The fix subagent's prompt carries the context it needs to act without rediscovering the unit: every finding, the process docs and file list from step 2, and the failing change.
 
 It must **re-gate its own changes** (typecheck, lint, this unit's tests) green before reporting — same as step 3, so you don't re-run them. Done when every blocking finding is resolved or explicitly waived.
 
