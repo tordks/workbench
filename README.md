@@ -1,11 +1,11 @@
-# workflow-vault
+# workbench
 
 My engineering setup and how I work — a **karpathy-style LLM wiki** plus the **skills** unique to my
 workflow. The wiki is knowledge an LLM agent maintains and grows over time; the skills are tooling,
 installable into any agent.
 
 ```
-workflow-vault/
+workbench/
   skills/          # my own agent skills (installable via the `skills` CLI)
     wiki-maintain/ #   ingest / query / lint the wiki
     orchestrate/   #   delegated multi-unit implementation
@@ -53,7 +53,7 @@ Install into any agent (Claude Code, Cursor, Codex, …) with the [`skills`
 CLI](https://github.com/vercel-labs/skills):
 
 ```
-npx skills@latest add tordks/workflow-vault
+npx skills@latest add tordks/workbench
 ```
 
 You'll be prompted to pick which skills and which agent. Only the skills **unique to my workflow**
