@@ -1,9 +1,6 @@
-# Obsidian — commit config, ignore per-machine churn
-wiki/.obsidian/workspace.json
-wiki/.obsidian/workspace-mobile.json
-wiki/.obsidian/cache
-wiki/.obsidian/plugins/
-wiki/.obsidian/*.bak
+# Obsidian — ignore per-user editor state; track only app.json (link/attachment conventions)
+wiki/.obsidian/*
+!wiki/.obsidian/app.json
 
 # Smart Connections local embeddings
 .smart-env/
