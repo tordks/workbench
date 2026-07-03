@@ -6,16 +6,18 @@ description: "Answer a question from the karpathy-style wiki — read-only. Use 
 Read the wiki and answer from it. This skill is the read interface: it knows the vault's layout and
 conventions so you don't have to.
 
-**Load the rules first:** `obsidian read _schema.md` — page types, tags, aliases. The skill runs
-wherever your agent runs, so every vault touch goes through the **Obsidian CLI**, which reaches the
-live vault.
+**Load the rules first:** `vault_read "_schema.md"` — page types, tags, aliases. Every vault touch
+goes through the **`obsidian` MCP server** (its `vault_*` / `search_*` tools), which reaches the live
+vault by paths relative to its root — never a filesystem path. The README covers connecting it.
 
 ## Find and read
 
-- `obsidian search "<terms>"` — full-text; `obsidian tags` / `obsidian tag <t>` to narrow by tag.
-- `obsidian backlinks <page>` and `obsidian links <page>` — traverse the neighborhood; the graph
-  often holds the answer the search terms missed.
-- `obsidian read <page>` — read the pages you land on.
+- `search_simple` — full-text. `search_query` runs JsonLogic over each note's metadata to narrow by
+  tag or field, e.g. `{"in": ["<tag>", {"var": "tags"}]}`.
+- Traverse the neighbourhood — the graph often holds the answer the search terms missed. `vault_read`
+  a page and follow its `[[wikilinks]]`; find its inbound links with
+  `search_query {"in": ["<path>", {"var": "links"}]}`.
+- `vault_read` — read the pages you land on.
 
 ## Answer
 

@@ -37,11 +37,12 @@ capture / query / ingest / lint operations. Key invariants: `sources/` is **immu
 rewrite); every page declares exactly one `type`; cross-link liberally with `[[wikilinks]]`.
 
 Prefer the `wiki-*` skills (`wiki-capture`, `wiki-query`, `wiki-ingest`, `wiki-lint`) over ad-hoc
-edits. These skills reach the vault through the **Obsidian CLI** (they run wherever the agent runs,
-so they cannot assume filesystem access — each reads `_schema.md` via the CLI first); this is a
-deliberate exception to the stdlib-only rule below, justified because the wiki lives only here and is
-maintained with Obsidian open. Open the `wiki/` folder (not the repo root) as the Obsidian vault, so
-`skills/` stays out of the graph.
+edits. These skills reach the vault through the **Obsidian Local REST API MCP server** (the
+`obsidian` MCP tools; they run wherever the agent runs, so they cannot assume filesystem access —
+each reads `_schema.md` via `vault_read` first); this is a deliberate exception to the stdlib-only
+rule below, justified because the wiki lives only here and is maintained with Obsidian open. Open the
+`wiki/` folder (not the repo root) as the Obsidian vault, so `skills/` stays out of the graph; the
+README covers connecting the MCP server.
 
 ## Editing skills
 
@@ -61,7 +62,7 @@ maintained with Obsidian open. Open the `wiki/` folder (not the repo root) as th
 - **Lint:** `pre-commit run --files <changed-file> …` (dead-link + markdown-style checks; see
   `wiki/_schema.md` → lint). Run `pre-commit autoupdate` once to pin hook revs. Structural and
   semantic lint — orphans, dangling links, contradictions, near-duplicates — is the `wiki-lint`
-  skill (Obsidian CLI + agent reads), not a hook.
+  skill (Obsidian MCP + agent reads), not a hook.
 - **Skill scripts:** sanity-check with `python3 -m py_compile skills/workflow/backlog/scripts/*.py`.
 
 ## Folder tree
@@ -80,10 +81,10 @@ skills/                      # installable skills unique to this workflow (via `
     setup-skills/            #     converge a repo's convention docs to these (docs only)
       conventions/           #       the convention docs it applies (ship with the skill)
   wiki/                      #   the wiki-maintaining skills — install group via `--skill 'wiki-*'`
-    wiki-capture/            #     park an idea/note/link into the wiki inbox (via Obsidian CLI)
-    wiki-query/              #     answer from the wiki, read-only (via Obsidian CLI)
-    wiki-ingest/             #     fold inbox + sources into atomic wiki pages (via Obsidian CLI)
-    wiki-lint/               #     audit the wiki for decay (via Obsidian CLI)
+    wiki-capture/            #     park an idea/note/link into the wiki inbox (via Obsidian MCP)
+    wiki-query/              #     answer from the wiki, read-only (via Obsidian MCP)
+    wiki-ingest/             #     fold inbox + sources into atomic wiki pages (via Obsidian MCP)
+    wiki-lint/               #     audit the wiki for decay (via Obsidian MCP)
 wiki/                        # the Obsidian vault (open THIS as the vault, not the repo root)
   _schema.md                 #   the maintenance discipline — read first before editing the wiki
   inbox/                     #   staging lane for raw captures awaiting ingest (not the wiki layer)

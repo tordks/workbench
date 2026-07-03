@@ -18,6 +18,7 @@ npx skills@latest add tordks/workbench      # pick the wiki and/or workflow grou
 /setup-skills
 
 # To edit the wiki: open `wiki/` (not the repo root) as an Obsidian vault, then `pre-commit install`
+# The wiki-* skills reach the vault over MCP — see "Connecting the agent to the vault" below
 ```
 
 
@@ -48,14 +49,47 @@ skill each: **capture** (`inbox/`), **query**, **ingest**, **lint**. Step 6 of t
 and ingests into it; later work queries it.
 
 **The tooling is still in progress on both sides.** The `wiki-*` skills the agent uses to read and
-edit the wiki reach the vault through the **Obsidian CLI** (so they run wherever the agent runs, and
-depend on Obsidian being available); they are unreviewed and unfinished, and the human-facing side is
-thin: for now you can open the `wiki/` folder as an Obsidian vault to read and hand-edit it; a minimal
-`.obsidian/` config is committed.
+edit the wiki reach the vault through the **Obsidian Local REST API MCP server** (so they run
+wherever the agent runs, and depend on Obsidian being open — see below); they are unreviewed and
+unfinished, and the human-facing side is thin: for now you can open the `wiki/` folder as an Obsidian
+vault to read and hand-edit it; a minimal `.obsidian/` config is committed.
 
 Two lint tiers guard against decay:
 - **Syntactic (automated):** `pre-commit install`, then every commit runs dead-link, broken-anchor,
   and markdown-style checks.
-- **Structural + semantic (on demand):** the `wiki-lint` skill — the Obsidian CLI finds orphans,
-  dangling links, and dead-ends; the agent reads for contradictions, near-duplicates, stale claims,
-  provenance drift, and tag drift (no tool does the reading).
+- **Structural + semantic (on demand):** the `wiki-lint` skill — an MCP `search_query` over the note
+  graph finds orphans and dead-ends (dangling links need a content diff); the agent reads for
+  contradictions, near-duplicates, stale claims, provenance drift, and tag drift (no tool does the
+  reading).
+
+### Connecting the agent to the vault (Obsidian Local REST API + MCP)
+
+The `wiki-*` skills call the MCP tools served by the
+[Obsidian Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api) plugin (v4.1.3+).
+The plugin runs **inside one vault** and serves *that* vault — there is no vault argument; its paths
+are relative to the vault root. So to point the skills at the wiki, register the plugin instance
+running in the `wiki/` vault:
+
+1. Open `wiki/` (not the repo root) as an Obsidian vault. In **Settings → Community plugins**, install
+   and enable **Local REST API**.
+2. In **Settings → Local REST API**, copy the **API key**. The HTTPS endpoint is
+   `https://127.0.0.1:27124` (self-signed cert); the plugin serves MCP at `/mcp/` over Streamable
+   HTTP + bearer token.
+3. Register it with Claude Code under the name **`obsidian`** (this name sets the tool prefix
+   `mcp__obsidian__*` the skills assume):
+
+   ```
+   claude mcp add --transport http obsidian https://127.0.0.1:27124/mcp/ \
+     --header "Authorization: Bearer <API_KEY>"
+   ```
+
+Gotchas:
+- **Self-signed cert.** The HTTPS port uses a cert the plugin generates; trust it, or enable the
+  plugin's non-encrypted HTTP port `27123` and register that endpoint instead.
+- **WSL → Windows.** The plugin binds **loopback on the machine running Obsidian**. If Claude Code
+  runs in WSL while Obsidian runs on Windows, `127.0.0.1` inside WSL does not reach it — use WSL
+  [mirrored networking](https://learn.microsoft.com/windows/wsl/networking#mirrored-mode-networking)
+  (`networkingMode=mirrored` in `.wslconfig`) so `127.0.0.1` is shared, or forward the port.
+- **Multiple vaults.** Run the plugin in each on a **distinct port** and register each as its own MCP
+  server (`obsidian`, `obsidian-work`, …) pointing at its port — the server name is just a label; the
+  vault it reaches is fixed by the port.

@@ -98,8 +98,8 @@ A page that has drifted mostly to `inferred` / `ambiguous` is speculation-heavy 
 
 Four operations, one skill each — `wiki-capture`, `wiki-query`, `wiki-ingest`, `wiki-lint`. The
 *procedure* lives in the skill; this file holds the *rules* it obeys. The skills run wherever the
-agent runs, so they reach this vault — including this file — through the **Obsidian CLI**, and each
-reads `_schema.md` first. The rules each operation must honour:
+agent runs, so they reach this vault — including this file — through the **Obsidian Local REST API
+MCP server**, and each reads `_schema.md` first. The rules each operation must honour:
 
 - **capture** appends one raw idea/note/link per file to `inbox/`; synthesis is `ingest`'s job.
 - **ingest** drains the inbox and folds named sources in. Capture external material to `sources/`

@@ -5,25 +5,21 @@ description: "Park an idea, note, or link into the wiki's inbox for later ingest
 
 Drop one raw thought into the wiki's `inbox/` and move on — capture, not filing.
 
-**Load the rules first:** `obsidian read _schema.md` — it owns the inbox lifecycle and autonomy. The
-skill runs wherever your agent runs, so every vault touch goes through the **Obsidian CLI**, which
-reaches the live vault.
+**Load the rules first:** `vault_read "_schema.md"` — it owns the inbox lifecycle and autonomy. Every
+vault touch goes through the **`obsidian` MCP server** (its `vault_*` / `search_*` / `command_*`
+tools), which reaches the live vault by paths relative to its root — never a filesystem path. The
+README covers connecting it.
 
 ## Capture
 
-Write **one file per capture** to the inbox:
-
-```
-obsidian create inbox/<kebab-slug>
-```
-
-Give it light frontmatter and the raw content — enough for `ingest` to work later without you:
+Write **one file per capture** with `vault_write "inbox/<kebab-slug>.md"` — light frontmatter plus the
+raw content, enough for `ingest` to work later without you:
 
 - `captured:` today's date
 - `kind:` `idea` | `note` | `link` | `source`
 - `link:` the URL, if any
 - body: the thought itself. For a URL, pull the readable content in now (so ingest needs no network)
-  — `obsidian web <url>` or a fetch — and paste it under the frontmatter.
+  and paste it under the frontmatter.
 
 ## Stay in your lane
 
