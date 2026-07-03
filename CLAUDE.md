@@ -23,6 +23,32 @@ In any file — wiki page, skill, script, doc — state what something *does* an
 decision was made. Never reference tickets, task IDs, or the narrative of *how a change came to be*;
 that context belongs in the tracker, not in files that outlive the work.
 
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues (`github.com/tordks/workbench`), managed via the `gh` CLI. External PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Five canonical roles mapped 1:1 to their default label strings (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+## Project conventions
+
+Where this repo's conventions live. Read a doc when its **Read when** applies — pull in only what the
+task needs, not all of them up front. No row = not configured (skills use built-ins + config).
+
+| Convention | Doc | Read when |
+|---|---|---|
+| Coding standards | `docs/agents/coding-standards.md` | writing or changing code |
+| Documentation | `docs/agents/doc-conventions.md` | writing or reviewing docs or comments |
+| Testing | `docs/agents/testing-conventions.md` | writing or changing tests |
+| Commits | `docs/agents/commit-conventions.md` | writing a commit or PR message |
+
 ## Editing the wiki
 
 **The wiki is an *instance* of a wiki, not documentation for this repo's tools.** Its pages are
