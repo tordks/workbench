@@ -4,7 +4,7 @@ title: Wiki Schema
 aliases: [schema, _schema]
 tags: [meta]
 created: 2026-07-02
-updated: 2026-07-02
+updated: 2026-07-03
 status: evergreen
 ---
 
@@ -76,6 +76,8 @@ Adding a tag means adding it here first. Seed vocabulary:
 
 - `meta` — about the vault itself
 - `python`, `frontend`, `testing`, `tooling`, `architecture`, `workflow`, `ai`
+- `wsl` — Windows Subsystem for Linux specifics (interop, GPU passthrough, path/CRLF quirks)
+- `docker` — containers, Compose, images, runtimes
 
 ## Links
 

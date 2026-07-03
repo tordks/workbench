@@ -2,7 +2,7 @@
 type: practice
 title: Running the Obsidian CLI on WSL
 aliases: [obsidian-cli-wsl, obsidian on wsl]
-tags: [tooling]
+tags: [tooling, wsl]
 created: 2026-07-02
 updated: 2026-07-02
 status: seed

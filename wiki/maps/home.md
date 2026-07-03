@@ -4,7 +4,7 @@ title: Home
 aliases: [home, index, start-here]
 tags: [meta]
 created: 2026-07-02
-updated: 2026-07-02
+updated: 2026-07-03
 status: evergreen
 ---
 
@@ -22,6 +22,7 @@ The front door to the vault. Open this first.
 - [[react-vite-project|React + Vite project setup]]
 - [[obsidian-cli-on-wsl|Running the Obsidian CLI on WSL]]
 - [[edit-wsl-obsidian-vault-from-windows|Edit a WSL-hosted Obsidian vault from Windows]]
+- [[docker-gpu-on-wsl|Give Docker GPU access on WSL2]]
 
 ## Concepts
 - [[blast-radius|Blast radius]]

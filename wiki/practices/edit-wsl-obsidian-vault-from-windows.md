@@ -2,7 +2,7 @@
 type: practice
 title: Edit a WSL-hosted Obsidian vault from Windows
 aliases: [wsl obsidian vault, obsidian wsl sync, wsl vault windows gui]
-tags: [tooling]
+tags: [tooling, wsl]
 created: 2026-07-03
 updated: 2026-07-03
 status: seed
