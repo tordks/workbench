@@ -36,6 +36,13 @@ Break the material into atomic, evergreen ideas. For **each** idea:
 - **Provenance-tag** each claim per `_schema.md` (`extracted` default, `^[inferred]`, `^[ambiguous]`).
 - **Cross-link** the touched page to its neighbours and back to the source.
 
+## Tend the maps
+
+New pages accrete into themes. When a cluster has grown enough that `home` no longer routes to it
+well, extend the theme's `map` — add the new page to the relevant MOC, or split a crowded cluster
+into its own (the mint trigger lives in `_schema.md`). Minting a map is bottom-up and autonomous —
+it's a new page; don't design a hierarchy ahead of the pages.
+
 ## Consume the inbox
 
 Once an inbox item is fully folded in, `vault_delete "inbox/<item>"` — git is the trail. This is the

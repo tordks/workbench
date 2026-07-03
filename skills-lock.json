@@ -155,19 +155,19 @@
       "source": "tordks/workbench",
       "sourceType": "github",
       "skillPath": "skills/wiki/wiki-ingest/SKILL.md",
-      "computedHash": "c75b8d979cbbfd3623d80a8c864dae28caf9f96866c78c177bf1c538e48c97d8"
+      "computedHash": "4efa932e2738c38320e452b58e8b6b11f5006ee8b857473e2980384bad12b7af"
     },
     "wiki-lint": {
       "source": "tordks/workbench",
       "sourceType": "github",
       "skillPath": "skills/wiki/wiki-lint/SKILL.md",
-      "computedHash": "c04f31ca85d245cd071624e1da13922f552b0fb7ac5a11a4469ea303b1bf99d0"
+      "computedHash": "cf505bc9b207703376a7871e5c39047c5f16bebf6af94c09d2d076e12a46627b"
     },
     "wiki-query": {
       "source": "tordks/workbench",
       "sourceType": "github",
       "skillPath": "skills/wiki/wiki-query/SKILL.md",
-      "computedHash": "7f129bc218a91f79877e57d89cd579c796b3683d63b7c17c9028d527a08a0425"
+      "computedHash": "59b346678b76454a5849f20f83e85601f9551c8645a0a884bc6e7141f211db92"
     },
     "writing-great-skills": {
       "source": "mattpocock/skills",
