@@ -1,0 +1,27 @@
+# Lean style tier. Link/anchor correctness is the dead-link hook's job; markdownlint
+# only guards against markup that renders wrong. The repo's house style is tight
+# (headings hug their lists, bare URLs in research notes, repeated section headings),
+# so the blank-line and cosmetic families are off — what stays on catches real breakage.
+config:
+  # House style — deliberately tight, renders fine in Obsidian:
+  MD022: false   # blank line around headings not required
+  MD032: false   # blank line around lists not required (heading hugs its list)
+  MD031: false   # blank line around fenced code not required
+  MD012: false   # consecutive blank lines allowed
+  MD024: false   # repeated headings allowed (ADR Context/Decision, research takeaways)
+  MD034: false   # bare URLs allowed (research/reference notes are URL-dense)
+  # Cosmetic / frontmatter shape:
+  MD013: false   # line length — prose wraps by hand ~100, tables/JsonLogic run long
+  MD041: false   # pages open with prose after YAML frontmatter, not an H1
+  MD025:
+    front_matter_title: ""   # a frontmatter `title:` is not a second H1
+  MD033: false   # inline HTML allowed when a page needs it
+  MD040: false   # fenced code without a language tag is fine
+  MD036: false   # bold used as a lightweight sub-heading is fine
+  MD049: false   # emphasis style (*asterisk* vs _underscore_) — cosmetic
+  MD004: false   # unordered-list marker (dash vs plus) — cosmetic
+  # Left ON — these catch markup that actually renders wrong: MD056 (table column
+  # count), MD047 (trailing newline), MD005 (list indent), MD042 (empty links), etc.
+# Installed skills, not this repo's authored markdown — don't lint them.
+ignores:
+  - ".claude/**"
