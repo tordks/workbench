@@ -84,8 +84,17 @@ running in the `wiki/` vault:
    ```
 
 Gotchas:
-- **Self-signed cert.** The HTTPS port uses a cert the plugin generates; trust it, or enable the
-  plugin's non-encrypted HTTP port `27123` and register that endpoint instead.
+- **Self-signed cert.** The HTTPS port `27124` presents a cert the plugin self-signs, so any client
+  that verifies certs — including Claude Code's Node runtime — refuses the connection and the server is
+  unreachable (`/mcp` reports `DEPTH_ZERO_SELF_SIGNED_CERT`). Two fixes:
+  - **Trust the cert.** Save it to a file — copy it from **Settings → Local REST API**, or export the
+    running server's cert with
+    `openssl s_client -connect 127.0.0.1:27124 </dev/null 2>/dev/null | openssl x509 > obsidian.pem` —
+    then point Node at it: `export NODE_EXTRA_CA_CERTS=/path/to/obsidian.pem` in your shell profile.
+    Node reads that variable only at startup, so restart Claude Code afterwards. (The cert's SAN is
+    `IP:127.0.0.1`, so it validates for the loopback host.)
+  - **Skip TLS.** Enable the plugin's non-encrypted HTTP port `27123` and register
+    `http://127.0.0.1:27123/mcp/` instead — fine for a loopback-only connection.
 - **WSL → Windows.** The plugin binds **loopback on the machine running Obsidian**. If Claude Code
   runs in WSL while Obsidian runs on Windows, `127.0.0.1` inside WSL does not reach it — use WSL
   [mirrored networking](https://learn.microsoft.com/windows/wsl/networking#mirrored-mode-networking)
