@@ -4,9 +4,8 @@ title: Blast radius
 aliases: [blast-radius, minimize blast radius]
 tags: [architecture, workflow]
 created: 2026-07-02
-updated: 2026-07-02
+updated: 2026-07-03
 status: evergreen
-related: ["[[_schema]]"]
 ---
 
 # Blast radius
@@ -20,6 +19,9 @@ changes. Prefer the form that costs the least to change later — keep blast rad
   positional or numeric ones that rot when things are reordered or renumbered. A decision referenced
   in 80 places can't be renumbered without an 80-edit sweep.
 
-This is why this vault encodes `type` in frontmatter (not filenames) and navigates by
-[[_schema|maps and links]] rather than deep folders: a page can be re-typed or re-homed without a
-rename that ripples through every reference.
+The cheapest-to-change form usually stores a fact as *data* keyed by a stable name, not baked into a
+position that other things count on. Classifying a document by a `type` field rather than by its
+folder lets it be reclassified without a move that every link to it has to follow; addressing a
+config value by key rather than by line number keeps callers valid when the file is reordered. The
+test is the same each time: when this one fact changes, how many other places have to change with
+it — and can you drive that number toward one.
