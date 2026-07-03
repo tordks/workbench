@@ -7,7 +7,7 @@ created: 2026-07-03
 updated: 2026-07-03
 status: seed
 source: ""
-related: ["[[obsidian-cli-on-wsl]]"]
+related: ["[[obsidian-cli-on-wsl]]", "[[unison]]"]
 ---
 
 # Edit a WSL-hosted Obsidian vault from Windows
@@ -60,9 +60,18 @@ syncer inside WSL** between two local folders — not multi-device sync:
   (canonical, git here)         (Obsidian watches this)
 ```
 
-- **Unison** — `apt install unison`; `-repeat watch -batch` for continuous sync. ^[inferred]
+- **Unison** — bidirectional, three-way; already fine on stock Ubuntu. The working WSL command and its
+  two gotchas (poll instead of `watch`; disable perms for NTFS) are in [[unison]].
 - **Mutagen** — single binary, near-real-time; built for cross-filesystem dev sync. ^[inferred]
 - **Syncthing** — robust, but device-to-device, so on one machine it needs two daemons: overkill here. ^[inferred]
+
+Whichever tool, **exclude `.obsidian/workspace.json`** (and `workspace-mobile.json`) from the sync.
+Obsidian rewrites it on every pane/tab/scroll change, so it churns constantly for no real content, and
+it's per-view session state each side wants its own copy of — a prime source of pointless conflicts.
+The rest of `.obsidian/` (plugins, appearance, hotkeys) *is* worth mirroring, so scope the exclusion to
+`workspace*`, not the whole folder. In Unison that's `-ignore 'Path .obsidian/workspace*'`. Note the
+file doesn't exist until the desktop app has opened the vault and saved a layout, so the rule is a no-op
+until then.
 
 ## Conflict handling
 
@@ -71,12 +80,9 @@ agent edits it on WSL while you edit it in Obsidian). Sync is fast, so the windo
 three tools are **fail-safe — none destroys a version** — but their *default* behaviour differs. The
 details below are from each tool's docs, not tested here. ^[inferred]
 
-- **Unison** — **three-way**: keeps an *archive* of the last-synced state, so it tells a one-sided edit
-  (propagated, not a conflict) from a both-sided one, and also catches update/delete and type conflicts.
-  Default: leaves **both** files untouched and reports `<-?->`; you resolve. Interactively `>` / `<` /
-  `/` push or skip; in `-batch` (watch mode) non-conflicting changes flow automatically and conflicts
-  are left and logged. Opt-in auto-resolve: `-prefer newer` + `-times` (last-writer-wins),
-  `-prefer <root>` (one side always wins), `-copyonconflict` (keep the losing copy).
+- **Unison** — **three-way** (archive of last-synced state), so it tells a one-sided edit from a
+  both-sided one. Default is fail-loud: leaves **both** files untouched, reports `<-?->`, you resolve;
+  `-batch` logs and moves on. Opt-in last-writer-wins is available. Flags in [[unison]].
 - **Mutagen** — bidirectional with conflict detection. Default mode `two-way-safe` **halts** on a
   conflict: it propagates everything non-conflicting, leaves the conflicting file untouched on both
   sides, and flags it for you. Switch to `two-way-resolved` to make one endpoint (alpha) win conflicts
@@ -92,5 +98,4 @@ never have a silent auto-resolution.
 ## Recommendation
 
 WSLg if it runs cleanly on the host; otherwise **file sync** (Unison or Mutagen) for a single-branch,
-live-refresh setup. Use the **worktree** only if you accept the separate-branch merge cycle. Exclude
-`.obsidian/` from sync if its workspace-state churn produces noise.
+live-refresh setup. Use the **worktree** only if you accept the separate-branch merge cycle.

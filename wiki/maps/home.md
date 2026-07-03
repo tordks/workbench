@@ -28,6 +28,7 @@ The front door to the vault. Open this first.
 
 ## References
 - [[obsidian-local-rest-api|Obsidian Local REST API + MCP]]
+- [[unison|Unison (file synchronizer)]]
 
 ## Maps
 _(add topic MOCs here as the vault grows)_
