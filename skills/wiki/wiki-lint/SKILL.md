@@ -17,7 +17,8 @@ Fast, exact graph checks no prose linter can do. `search_query` runs JsonLogic o
 NoteJson — `links` is its resolved outlinks, `backlinks` its resolved inlinks, and an empty array is
 falsy in JsonLogic:
 
-- **Orphans** — pages nothing links to: `{"!": {"var": "backlinks"}}`.
+- **Orphans** — pages nothing links to, excluding MOCs (navigational roots, expected to have no
+  inlinks): `{"and": [{"!": {"var": "backlinks"}}, {"!=": [{"var": "frontmatter.type"}, "map"]}]}`.
 - **Dead-ends** — pages that link out to nothing: `{"!": {"var": "links"}}`.
 - **Dangling links** — `[[targets]]` resolving to no page (the schema's *coverage gaps* — pages worth
   writing). `links` lists resolved targets only, so no single query finds these: `vault_read` each

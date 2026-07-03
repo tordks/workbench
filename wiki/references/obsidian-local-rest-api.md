@@ -4,8 +4,8 @@ title: Obsidian Local REST API + MCP
 aliases: [obsidian-local-rest-api, obsidian-rest-api, obsidian-mcp]
 tags: [tooling, ai]
 created: 2026-07-02
-updated: 2026-07-02
-status: seed
+updated: 2026-07-03
+status: draft
 source: "[[obsidian-local-rest-api-docs]]"
 related: ["[[obsidian-cli-on-wsl]]"]
 ---
@@ -27,18 +27,32 @@ client structured tools; the REST API gives it raw HTTP endpoints over the same 
 
 ## MCP tools
 
-Served at `/mcp/` over Streamable HTTP. The advertised tools:
+Served at `/mcp/` over Streamable HTTP. The tools (from the plugin's `openapi.yaml`):
 
 | tool | does |
 |---|---|
-| `vault_read` | read a note |
-| `vault_write` | write/replace a note |
+| `vault_read` | read a note (returns `NoteJson` with metadata) |
+| `vault_write` / `vault_append` | write/replace, or append to, a note |
 | `vault_patch` | **surgical** edit — target a heading, block ref, or frontmatter field without rewriting the file |
-| `search_query` | search the vault |
-| `command_execute` | run an Obsidian command |
+| `vault_delete` / `vault_move` | delete or move/rename a note |
+| `vault_list` | list files/subdirs at a path |
+| `vault_get_document_map` | a note's headings, block refs, frontmatter fields |
+| `search_simple` | full-text, **fuzzy + ranked** — the only ranked path |
+| `search_query` | structured **JsonLogic** over each note's `NoteJson` |
+| `tag_list` | all tags in the vault with usage counts |
+| `command_list` / `command_execute` | list and run Obsidian commands |
+| `active_file_get_path` / `periodic_note_get_path` / `open_file` | active/periodic note, open in UI |
 
 `vault_patch` is the standout: it edits a single frontmatter field or appends under one heading
 without rewriting the whole note.
+
+### `search_query` — the `NoteJson` fields
+
+JsonLogic evaluates against each note's `NoteJson`. The top-level `var`s are `tags`, `frontmatter`,
+`content`, `path`, `links` (resolved outlinks), `backlinks` (resolved inlinks), and `stat`
+(`ctime`/`mtime`/`size`). Aliases and title are **not** top-level — reach them as
+`frontmatter.aliases` / `frontmatter.title`; any frontmatter key is `frontmatter.<field>`. Dangling
+`[[links]]` resolve to nothing and leave no trace in `links`/`backlinks`.
 
 ## REST surface (when a raw HTTP call is needed)
 

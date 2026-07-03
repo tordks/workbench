@@ -81,7 +81,15 @@ Adding a tag means adding it here first. Seed vocabulary:
 
 - Cross-link liberally with `[[wikilinks]]`. A `[[link]]` to a page that doesn't exist yet is fine —
   it marks a page worth writing.
-- Navigation is by **Maps of Content**, not deep folders. A page can belong to many maps at once.
+- Navigation is by **Maps of Content** (`map` pages), not deep folders. A MOC is a *curated
+  entry point for a theme* — the hand-picked, ordered set of pages you would start from to explore
+  it; the curation is the content, not an auto-generated list. A page can belong to many maps at
+  once; maps are not a taxonomy and do not nest.
+- **Mint a map bottom-up, on crowding.** One map — `home` — is enough until a cluster of pages
+  around a sub-theme has grown large enough that `home` no longer routes to it efficiently; only
+  then split that cluster into its own MOC. Never design a map hierarchy ahead of the pages. A
+  per-entry one-line gloss is a quality nicety — add it when the target isn't obvious from its
+  title — not a requirement.
 
 ## Provenance
 
