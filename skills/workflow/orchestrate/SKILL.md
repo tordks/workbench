@@ -27,7 +27,7 @@ Done when, for every unit, you hold a **tight file list** and the doc paths its 
 Spawn **one subagent** (model: sonnet) per unit to build it. **Carry the in-force convention docs from step 2 inline in its prompt** — hand them over so it builds against them without discovering them. Its prompt must tell it to:
 
 - Maintain a **tasklist** for the unit: break the work into tasks up front, keep exactly one in-progress, and mark each done as it lands — so its progress is legible without you interrupting.
-- Run the `/implement` skill and follow it.
+- Run the `/tdd` skill and follow it.
 - Read first, before any code: the process docs, those convention docs, and the scoped file list from step 2.
 - Implement only this unit; **don't commit** — leave the tree dirty for review.
 - **Gate its own changes before reporting**: typecheck, lint/format, and run this unit's tests — all green and clean. This gating is the subagent's job, not yours; you won't re-run it.

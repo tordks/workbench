@@ -1,12 +1,16 @@
 ---
 type: practice
 title: The Workflow
-aliases: [workflow]
-tags: [workflow]
+aliases:
+  - workflow
+tags:
+  - workflow
 created: 2026-07-02
-updated: 2026-07-02
+updated: 2026-07-03
 status: draft
-related: ["[[python-project]]", "[[react-vite-project]]"]
+related:
+  - "[[python-project]]"
+  - "[[react-vite-project]]"
 ---
 
 # The Workflow
@@ -37,10 +41,9 @@ below.
    - Single session → go straight to implementation.
 4. **Pick what's next** — `backlog` presents the open issues in dependency order (ready / blocked /
    underspecified) so you choose the next unit. It reads, never writes.
-5. **Build** — `orchestrate` for multi-unit work (delegate each unit to a subagent running
-   `implement`, review, commit per unit); or `implement` directly for a single unit. `implement`
-   builds test-first via `tdd` (red-green-refactor), against `codebase-design` — deep modules,
-   clean seams.
+5. **Build** — `orchestrate` for multi-unit work (delegate each unit to a subagent running `tdd`,
+   review, commit per unit); or `implement` directly for a single unit. Both build test-first via
+   `tdd` (red-green-refactor), against `codebase-design` — deep modules, clean seams.
 6. **Review** — `code-review` (standards + spec) + `review-docs` (docstrings/comments/prose).
 
 ## Bridging context
