@@ -693,10 +693,10 @@ This cluster asks a narrow question: **is there a single existing server product
 | **Logseq (file mode)** | ✅ Yes (`.md`/`.org` graph) | ❌ None first-party | ✅ Backlinks/queries native | ⚠️ App-side, not headless API | ✅ Live queries | ❌ None in file mode | AGPL-3.0 | **Evaluate (UI layer only)** |
 | **Logseq (DB version)** | ❌ No (SQLite) | ❌ | ✅ | ⚠️ | ✅ | ⚠️ RTC alpha | AGPL-3.0 | **Avoid (wrong direction)** |
 | **TriliumNext** | ❌ No (SQLite doc DB) | ⚠️ Community only (ETAPI) | ✅ Relation/note maps | ✅ Built-in FTS | — | ⚠️ OpenID+TOTP (single-tenant) | AGPL-3.0 | **Avoid as store** |
-| **Anytype** | ❌ No (CRDT object DB) | ❌ (gRPC/Agents API) | — | — | ⚠️ Run whole any-sync network | ASYAL 1.0 (source-available) | **Avoid** |
-| **Outline** | ❌ No (Postgres) | ✅ **First-party** (OAuth) | — (collections) | ✅ Built-in | ✅ **SSO: Google/Slack/Cognito/OIDC** | BSL 1.1 | **Avoid as store; study MCP+SSO** |
-| **AppFlowy** | ❌ No (RocksDB + SQLite) | ❌ None found | ❔ Unconfirmed | ❔ Unconfirmed | ⚠️ Separate AppFlowy Cloud stack | AGPLv3 | **Avoid** |
-| **AFFiNE** | ❌ No (CRDT + Postgres) | ❌ None found | ❔ Unconfirmed | ❔ Unconfirmed | ❔ Implied, unconfirmed | AGPLv3 (unconfirmed this pass) | **Avoid** |
+| **Anytype** | ❌ No (CRDT object DB) | ❌ (gRPC/Agents API) | — | — | — | ⚠️ Run whole any-sync network | ASYAL 1.0 (source-available) | **Avoid** |
+| **Outline** | ❌ No (Postgres) | ✅ **First-party** (OAuth) | — (collections) | ✅ Built-in | — | ✅ **SSO: Google/Slack/Cognito/OIDC** | BSL 1.1 | **Avoid as store; study MCP+SSO** |
+| **AppFlowy** | ❌ No (RocksDB + SQLite) | ❌ None found | ❔ Unconfirmed | ❔ Unconfirmed | ❔ Unconfirmed | ⚠️ Separate AppFlowy Cloud stack | AGPLv3 | **Avoid** |
+| **AFFiNE** | ❌ No (CRDT + Postgres) | ❌ None found | ❔ Unconfirmed | ❔ Unconfirmed | ❔ Unconfirmed | ❔ Implied, unconfirmed | AGPLv3 (unconfirmed this pass) | **Avoid** |
 
 Legend: ✅ present / native · ⚠️ present but caveated · ❌ absent · ❔ not confirmed in this pass · — not applicable/not documented.
 
@@ -5400,7 +5400,7 @@ This is the one genuine cost *decision* in the cluster. It is, per the cross-cut
 
 #### qmd local embedding/rerank models (the local side)
 
-<https://github.com/tobi/qmd> · MIT (free). ~2GB resident GGUF models in `qmd mcp --http --daemon` mode (BM25 + vector + LLM-rerank), per the [prior single-machine research](../headless-wiki-hosting.md).
+<https://github.com/tobi/qmd> · MIT (free). ~2GB resident GGUF models in `qmd mcp --http --daemon` mode (BM25 + vector + LLM-rerank), per the [prior single-machine research](headless-wiki-hosting.md).
 
 - **Per-query cost:** **$0** once running — the entire embedding+rerank cost is the *fixed* cost of a VPS large enough to hold ~2GB resident models + OS/process overhead.
 - **The real cost it imposes:** a Hetzner CX22 (2 vCPU / 4GB) does **not** comfortably hold a 2GB-resident daemon alongside OS, MCP server, and graph/lint tooling. This realistically pushes the box up to a **CPX-class ~8GB tier** — that upsizing *is* the dollar cost of the local-model choice, not a per-query fee.
