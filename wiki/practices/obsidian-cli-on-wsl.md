@@ -7,7 +7,7 @@ created: 2026-07-02
 updated: 2026-07-02
 status: seed
 source: "[[obsidian-cli-docs]]"
-related: []
+related: ["[[edit-wsl-obsidian-vault-from-windows]]"]
 ---
 
 # Running the Obsidian CLI on WSL

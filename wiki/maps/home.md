@@ -21,6 +21,7 @@ The front door to the vault. Open this first.
 - [[python-project|Python project setup]]
 - [[react-vite-project|React + Vite project setup]]
 - [[obsidian-cli-on-wsl|Running the Obsidian CLI on WSL]]
+- [[edit-wsl-obsidian-vault-from-windows|Edit a WSL-hosted Obsidian vault from Windows]]
 
 ## Concepts
 - [[blast-radius|Blast radius]]
