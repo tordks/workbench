@@ -1,6 +1,6 @@
 ---
 name: wiki-query
-description: "Answer a question from the karpathy-style wiki — read-only. Use when the question is about a concept, convention, tool reference, or past decision the project would have curated; prefer it over re-deriving. Not for general knowledge, live code state, or facts read straight from the repo."
+description: "Consult the karpathy-style wiki for knowledge it has already curated — read-only. Reach for it mid-task when you need a concept, convention, tool reference, or past decision the wiki would hold; prefer it over re-deriving. Not for general knowledge, live code state, or facts read straight from the repo."
 ---
 
 The read interface to the vault: it knows the layout and search primitives so the caller doesn't.

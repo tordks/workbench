@@ -108,7 +108,7 @@ skills/                      # installable skills unique to this workflow (via `
       conventions/           #       the convention docs it applies (ship with the skill)
   wiki/                      #   the wiki-maintaining skills — install group via `--skill 'wiki-*'`
     wiki-capture/            #     park an idea/note/link into the wiki inbox (via Obsidian MCP)
-    wiki-query/              #     answer from the wiki, read-only (via Obsidian MCP)
+    wiki-query/              #     consult the curated wiki, read-only (via Obsidian MCP)
     wiki-ingest/             #     fold inbox + sources into atomic wiki pages (via Obsidian MCP)
     wiki-lint/               #     audit the wiki for decay (via Obsidian MCP)
 wiki/                        # the Obsidian vault (open THIS as the vault, not the repo root)
