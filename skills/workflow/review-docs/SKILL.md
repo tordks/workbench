@@ -31,13 +31,13 @@ Review that compact bundle and open full source only for a unit whose docstring 
 
 ## Rules
 
-Flag every place the docs break one of these. Where the repo carries a `docs/agents/doc-conventions.md`, that doc is the repo's documentation conventions in force — read it and enforce it in place of this list.
+Flag every place the docs break one of these. The non-obvious *why* is what a docstring is *for* — never flag one merely for explaining why; flag only the specific breaks below. Where the repo carries a `docs/agents/doc-conventions.md`, that doc is the repo's documentation conventions in force.
 
-1. **No meta-commentary.** Docs say what something does, and why a non-obvious decision holds — never issue or task IDs, PR or session narrative, or "why this change was made." That context belongs in the tracker, not in files that outlive the work.
+1. **No meta-commentary.** Docs say what something does, and why a non-obvious decision holds — never issue or task IDs, PR or session narrative, or the story of an edit ("why this change was made," what it used to do). Timeless design rationale — why the code holds the shape it does — is the *why* docs owe, not meta-commentary. Edit-narrative belongs in the tracker, not in files that outlive the work.
 
 2. **Single source of truth — minimize blast radius.** Each fact has one home; everywhere else refers to it by stable name, not by number or position. Flag a fact restated where it can drift from its source, and an unstable identifier (an ADR number, a line or position) cited away from the place that owns it.
 
-3. **Docstrings stay in their own unit.** A docstring describes only its unit's contract — purpose, parameters, return, invariants, and the non-obvious *why*. It does not narrate a collaborator, caller, or downstream module. Favour *why* over *what*; the code and types already state the *what*.
+3. **Docstrings stay in their own unit.** A docstring describes only its unit's contract — purpose, parameters, return, invariants, and the non-obvious *why*. Naming another unit to justify *this* unit's decision is part of that why and stays; describing what that other unit *does* — its behaviour or contract — is narration and belongs in that unit's own doc. Favour *why* over *what*; the code and types already state the *what*.
 
 4. **No staleness.** A docstring or comment must still match the code it describes.
 
