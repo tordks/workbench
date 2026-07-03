@@ -11,6 +11,17 @@ repos:
     hooks:
       - id: markdownlint-cli2    # markdown style / frontmatter shape
 
+  # The doc-conventions rule-text has one canonical home (setup-skills); review-docs
+  # ships a byte-identical fallback so it travels on install. Fail loudly on drift.
+  - repo: local
+    hooks:
+      - id: doc-conventions-in-sync
+        name: doc-conventions copies byte-identical
+        entry: python3 -c "import sys,filecmp; sys.exit(0 if filecmp.cmp('skills/workflow/setup-skills/conventions/doc-conventions.md','skills/workflow/review-docs/conventions/doc-conventions.md',shallow=False) else 're-sync needed — review-docs/conventions/doc-conventions.md must match setup-skills/conventions/doc-conventions.md')"
+        language: system
+        pass_filenames: false
+        files: conventions/doc-conventions\.md$
+
   # Optional local internal-link check (no network). Requires `mlc` on PATH:
   #   cargo install mlc   OR   download a binary from github.com/becheran/mlc
   # - repo: local

@@ -3,7 +3,7 @@
 Emits every docstring with its `file:line` and the signature it attaches to, plus
 every comment — the compact bundle a review subagent reads instead of the source
 tree. The signature travels with each docstring so the reviewer can judge whether
-the docstring stays in its own unit and still matches the code (Rules 3-4). Prose
+the docstring stays in its own unit and still matches the code. Prose
 files (`*.md`, ADRs) are already documentation and are read directly, not harvested.
 
 Usage:
