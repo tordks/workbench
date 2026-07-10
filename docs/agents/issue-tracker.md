@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and PRDs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
+Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
 
 ## Conventions
 
@@ -36,9 +36,11 @@ Run `gh issue view <number> --comments`.
 ## Issue dependencies
 
 Issue-to-issue blockers use GitHub's native dependency graph — the `blocked_by` links are the single
-source of truth. Author them directly (`gh api …/dependencies/blocked_by`); no `## Blocked by` body
-section and no promote step. `backlog`'s `order-from-github-deps.py` reads that graph, topo-sorts the
-open issues, marks the ready ones, and detects cycles. `backlog` only reads — it never writes deps.
+source of truth. Author them directly (`gh api …/dependencies/blocked_by`). A `## Blocked by` body
+section is draft input, not truth: after a creation batch, run `backlog`'s `promote-body-to-native.py`
+to bridge any blocker left in a body alone. `backlog`'s `order-from-github-deps.py` reads that graph,
+topo-sorts the open issues, marks the ready ones, and detects cycles. `backlog` only reads — it never
+writes deps.
 
 ## Wayfinding operations
 

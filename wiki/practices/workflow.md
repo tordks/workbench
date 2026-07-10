@@ -6,7 +6,7 @@ aliases:
 tags:
   - workflow
 created: 2026-07-02
-updated: 2026-07-03
+updated: 2026-07-10
 status: draft
 related:
   - "[[python-project]]"
@@ -36,8 +36,8 @@ below.
 2. **Detour to prototype** — `prototype` when a question needs a runnable answer (state, business
    logic, a UI you have to see): a throwaway build that settles the question, then is discarded.
 3. **Split the work:**
-   - Multi-session build → `to-prd` (synthesize the conversation into a PRD) → `to-issues`
-     (slice the PRD into independently grabbable issues).
+   - Multi-session build → `to-spec` (synthesize the conversation into a spec) → `to-tickets`
+     (slice the spec into tracer-bullet tickets, each declaring its blocking edges).
    - Single session → go straight to implementation.
 4. **Pick what's next** — `backlog` presents the open issues in dependency order (ready / blocked /
    underspecified) so you choose the next unit. It reads, never writes.

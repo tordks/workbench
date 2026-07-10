@@ -102,7 +102,7 @@ skills/                      # installable skills unique to this workflow (via `
   workflow/                  #   the engineering-workflow skills — install group
     backlog/                 #     present open issues in dependency order (read-only)
       scripts/               #       order_core / bodyparse / ghlib + the two readers + the bridge
-    orchestrate/             #     drive issues/PRD to done via per-unit subagents
+    orchestrate/             #     drive issues/spec to done via per-unit subagents
     review-docs/             #     documentation-discipline review
     setup-skills/            #     converge a repo's convention docs to these (docs only)
       conventions/           #       the convention docs it applies (ship with the skill)

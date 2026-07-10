@@ -28,7 +28,7 @@ The path most work travels, from idea to shipped code. Each named step is a skil
 this repo and some from the matt pocock skills. At a glance the steps are:
 
 1. **Sharpen the idea** — interview until the plan/spec holds together; prototype when a question needs a runnable answer.
-2. **Split the work** — a multi-session build becomes a PRD, then independently grabbable issues; a single session goes straight to implementation.
+2. **Split the work** — a multi-session build becomes a spec, then independently grabbable tickets; a single session goes straight to implementation.
 3. **Pick what's next** — `/backlog` presents the open issues in dependency order.
 4. **Build** — `/orchestrate` delegates each unit to a subagent sequentially, or you implement a single unit directly with `/implement`.
 5. **Review** — `/code-review` for code against standards and spec, `/review-docs` for docstrings/comments/prose. Run automatically after each unit by `/orchestrate`
